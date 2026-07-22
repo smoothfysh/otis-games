@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Count &amp; Drop — Otis Games</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='4' y='26' font-size='24'>🐱</text></svg>">
+  <style>
+    .count-drop { width: 100%; height: 100dvh; display: flex; flex-direction: column; position: relative; background: linear-gradient(180deg, #F5F0EB 0%, #E8F4E8 100%); overflow: hidden; padding-top: var(--header-h); }
+
+    .cd-back-link {
+      font-size: 1.3rem; text-decoration: none; color: var(--text);
+      padding: 8px 18px; border-radius: 12px;
+      background: rgba(255,255,255,0.9); box-shadow: 0 2px 8px var(--shadow);
+      font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+      transition: var(--transition);
+    }
+    .cd-back-link:active { transform: scale(0.92); }
+
+    .cd-title-group { text-align: center; padding: 16px 12px 0; }
+    .cd-title { font-size: clamp(2.2rem, 7vw, 3.5rem) !important; font-weight: 800; color: var(--teal); margin-bottom: 2px; }
+    .cd-subtitle { font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text); opacity: 0.65; margin: 0; }
+
+    .cd-target {
+      text-align: center; padding: 8px 12px 4px;
+      font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800;
+      color: var(--text); letter-spacing: 2px; min-height: 3.5rem;
+    }
+    .cd-target .cd-target-emoji { font-size: clamp(1.8rem, 5vw, 3rem); }
+
+    .cd-play-area { flex: 1; display: flex; flex-direction: column; padding: 8px 16px; position: relative; }
+
+    .cd-meadow {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(123, 200, 164, 0.15); border: 3px dashed var(--teal);
+      border-radius: 24px; margin-bottom: 12px; position: relative;
+      transition: var(--transition); min-height: 120px;
+    }
+    .cd-meadow.hover { background: rgba(123, 200, 164, 0.25); border-color: var(--teal); transform: scale(1.01); }
+
+    .cd-meadow-label {
+      position: absolute; top: 8px; font-size: 0.75rem; font-weight: 600;
+      color: var(--teal); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .cd-meadow-count {
+      position: absolute; bottom: 8px; font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 700; color: var(--teal); opacity: 0.7;
+    }
+    .cd-meadow-empty {
+      font-size: clamp(1rem, 3vw, 1.2rem); color: var(--text); opacity: 0.35;
+    }
+
+    .cd-placed {
+      display: flex; flex-wrap: wrap; align-content: center; justify-content: center;
+      gap: 8px; padding: 32px 12px; max-width: 90%;
+    }
+    .cd-placed-item {
+      font-size: clamp(1.6rem, 5vw, 2.8rem); cursor: pointer;
+      transition: transform 0.15s; touch-action: manipulation;
+      animation: bounce 0.3s ease;
+      width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.5); border-radius: 12px;
+    }
+    .cd-placed-item:active { transform: scale(0.85); }
+
+    .cd-tray {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 10px; padding: 12px 16px;
+      background: rgba(255,255,255,0.7); border-radius: 20px;
+      min-height: 72px; box-shadow: 0 2px 8px var(--shadow);
+    }
+    .cd-tray-label {
+      width: 100%; text-align: center; font-size: 0.7rem;
+      font-weight: 600; color: var(--text); opacity: 0.4;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px;
+    }
+
+    .cd-animal {
+      font-size: clamp(1.8rem, 5vw, 2.8rem); cursor: grab; touch-action: none;
+      width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.3s; z-index: 10;
+      background: white; border-radius: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1); flex-shrink: 0;
+    }
+    .cd-animal:active { cursor: grabbing; transform: scale(1.1); box-shadow: 0 6px 14px rgba(0,0,0,0.2); }
+    .cd-animal.dragging { z-index: 100; opacity: 0.9; transform: scale(1.3); box-shadow: 0 10px 24px rgba(0,0,0,0.25); }
+    .cd-animal.hidden { visibility: hidden; pointer-events: none; }
+
+    .cd-difficulty {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 12px 16px; font-size: 0.95rem; color: var(--text);
+    }
+    .cd-difficulty label { font-weight: 600; white-space: nowrap; }
+    .cd-difficulty input[type="range"] {
+      width: 140px; height: 6px; border-radius: 3px; appearance: none;
+      background: linear-gradient(to right, #F9E076, #F4A261);
+      outline: none; cursor: pointer;
+    }
+    .cd-difficulty input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: white; border: 2px solid #F4A261; cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .cd-difficulty input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: white; border: 2px solid #F4A261; cursor: pointer;
+    }
+    .cd-diff-value { font-weight: 700; color: #E76F51; min-width: 28px; text-align: center; }
+
+    .cd-round {
+      text-align: center; padding: 8px 8px 24px;
+      font-size: 0.85rem; color: var(--text); opacity: 0.5;
+    }
+
+    @media (max-width: 480px) {
+      .cd-animal { width: 48px; height: 48px; font-size: clamp(1.5rem, 5vw, 2.2rem); }
+      .cd-placed-item { width: 44px; height: 44px; font-size: clamp(1.4rem, 5vw, 2.2rem); }
+      .cd-tray { gap: 8px; padding: 8px 12px; }
+      .cd-play-area { padding: 6px 12px; }
+    }
+
+    @media (max-width: 360px) {
+      .cd-animal { width: 42px; height: 42px; font-size: clamp(1.2rem, 4vw, 1.8rem); }
+      .cd-placed-item { width: 38px; height: 38px; font-size: clamp(1.1rem, 4vw, 1.6rem); }
+      .cd-tray { gap: 6px; padding: 6px 10px; min-height: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="count-drop">
+    <div class="game-header">
+      <a href="../index.html" class="cd-back-link">← Back</a>
+    </div>
+
+    <div class="cd-title-group">
+      <div class="cd-title">Count &amp; Drop</div>
+      <p class="cd-subtitle">Drag the Cats into the meadow!</p>
+    </div>
+
+    <div class="cd-difficulty">
+      <label for="cdMaxSlider">Max:</label>
+      <input type="range" id="cdMaxSlider" min="5" max="10" value="10" step="1">
+      <span class="cd-diff-value" id="cdDiffValue">10</span>
+    </div>
+
+    <div class="cd-target" id="cdTarget">🐱 × 3</div>
+
+    <div class="cd-play-area">
+      <div class="cd-meadow" id="cdMeadow">
+        <span class="cd-meadow-label">Meadow</span>
+        <span class="cd-meadow-empty" id="cdMeadowEmpty">Drop animals here!</span>
+        <div class="cd-placed" id="cdPlaced"></div>
+        <span class="cd-meadow-count" id="cdMeadowCount">0 / 3</span>
+      </div>
+      <div class="cd-tray" id="cdTray">
+        <span class="cd-tray-label">Animals</span>
+      </div>
+    </div>
+
+    <div class="cd-round" id="cdRound">Round 1 of 8</div>
+
+    <div class="game-footer"><span>© Otis Games by Cadence-X.com</span></div>
+  </div>
+
+  <script src="../scripts/shared.js"></script>
+  <script>
+    (function() {
+      const ANIMALS = ['🐱', '🐶', '🐰', '🐼', '🐸', '🐵', '🐷', '🦊'];
+      const ANIMAL_NAMES = { '🐱': 'Cats', '🐶': 'Dogs', '🐰': 'Bunnies', '🐼': 'Pandas', '🐸': 'Frogs', '🐵': 'Monkeys', '🐷': 'Pigs', '🦊': 'Foxes' };
+      const TOTAL_ROUNDS = 10;
+      let maxCount = 10;
+      let rounds = [];
+      let round = 0;
+      let currentAnimal = '';
+      let currentTarget = 0;
+      let placedCount = 0;
+      let dragState = null;
+
+      const targetEl = document.getElementById('cdTarget');
+      const meadowEl = document.getElementById('cdMeadow');
+      const placedEl = document.getElementById('cdPlaced');
+      const meadowCountEl = document.getElementById('cdMeadowCount');
+      const meadowEmptyEl = document.getElementById('cdMeadowEmpty');
+      const trayEl = document.getElementById('cdTray');
+      const roundEl = document.getElementById('cdRound');
+      const subtitleEl = document.querySelector('.cd-subtitle');
+      const maxSlider = document.getElementById('cdMaxSlider');
+      const diffValue = document.getElementById('cdDiffValue');
+
+      function generateRounds() {
+        const nums = [];
+        for (let i = 1; i <= maxCount; i++) nums.push(i);
+        while (nums.length < TOTAL_ROUNDS) {
+          nums.push(Math.floor(Math.random() * maxCount) + 1);
+        }
+        rounds = shuffleArray(nums).map(t => ({ target: t }));
+        round = 0;
+      }
+
+      function loadRound() {
+        if (round >= rounds.length) {
+          createCelebration(document.body, 'You counted them all!', '🌟', () => {
+            round = 0; generateRounds(); loadRound();
+          });
+          roundEl.textContent = 'All done! 🎉';
+          return;
+        }
+
+        currentTarget = rounds[round].target;
+        currentAnimal = ANIMALS[round % ANIMALS.length];
+        placedCount = 0;
+
+        targetEl.textContent = `${currentAnimal} × ${currentTarget}`;
+        roundEl.textContent = `Round ${round + 1} of ${rounds.length}`;
+        subtitleEl.textContent = `Drag the ${ANIMAL_NAMES[currentAnimal]} into the meadow!`;
+        updateMeadow();
+
+        // Build tray
+        trayEl.innerHTML = `<span class="cd-tray-label">${ANIMAL_NAMES[currentAnimal]}</span>`;
+        for (let i = 0; i < maxCount; i++) {
+          const el = document.createElement('div');
+          el.className = 'cd-animal';
+          el.textContent = currentAnimal;
+          el.dataset.index = i;
+          trayEl.appendChild(el);
+
+          el.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            el.classList.add('dragging');
+            const rect = el.getBoundingClientRect();
+            dragState = {
+              el, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top,
+              startX: rect.left, startY: rect.top, inMeadow: false,
+            };
+            el.style.position = 'fixed';
+            el.style.left = `${rect.left}px`;
+            el.style.top = `${rect.top}px`;
+            el.style.width = `${rect.width}px`;
+            el.style.height = `${rect.height}px`;
+          });
+        }
+      }
+
+      function updateMeadow() {
+        meadowCountEl.textContent = `${placedCount} / ${currentTarget}`;
+        placedEl.innerHTML = '';
+        for (let i = 0; i < placedCount; i++) {
+          const item = document.createElement('div');
+          item.className = 'cd-placed-item';
+          item.textContent = currentAnimal;
+          item.dataset.index = i;
+          item.addEventListener('click', () => {
+            // Remove from meadow, return to tray
+            placedCount--;
+            updateMeadow();
+            updateTrayAvailability();
+            OtisAudio.playPop();
+          });
+          placedEl.appendChild(item);
+        }
+        meadowEmptyEl.style.display = placedCount === 0 ? 'block' : 'none';
+        updateTrayAvailability();
+      }
+
+      function updateTrayAvailability() {
+        const available = maxCount - placedCount;
+        const animals = trayEl.querySelectorAll('.cd-animal');
+        let visible = 0;
+        animals.forEach((el, i) => {
+          if (i < available) {
+            el.classList.remove('hidden');
+            visible++;
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+      }
+
+      function onPointerMove(e) {
+        if (!dragState) return;
+        dragState.el.style.left = `${e.clientX - dragState.offsetX}px`;
+        dragState.el.style.top = `${e.clientY - dragState.offsetY}px`;
+
+        const r = meadowEl.getBoundingClientRect();
+        const overMeadow = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        meadowEl.classList.toggle('hover', overMeadow);
+        dragState.inMeadow = overMeadow;
+      }
+
+      function onPointerUp(e) {
+        if (!dragState) return;
+        dragState.el.classList.remove('dragging');
+
+        if (dragState.inMeadow && placedCount < currentTarget) {
+          // Drop in meadow
+          dragState.el.remove();
+          placedCount++;
+          updateMeadow();
+          OtisAudio.playChime();
+          OtisParticles.burst(e.clientX, e.clientY, '#7BC8A4', 12);
+
+          if (placedCount >= currentTarget) {
+            OtisAudio.playFanfare();
+            setTimeout(() => {
+              round++;
+              loadRound();
+            }, 900);
+          }
+        } else {
+          // Return to tray — reset position
+          dragState.el.style.position = '';
+          dragState.el.style.left = '';
+          dragState.el.style.top = '';
+          dragState.el.style.width = '';
+          dragState.el.style.height = '';
+        }
+
+        meadowEl.classList.remove('hover');
+        dragState = null;
+      }
+
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+
+      generateRounds();
+      loadRound();
+
+      maxSlider.addEventListener('input', () => {
+        maxCount = parseInt(maxSlider.value);
+        diffValue.textContent = maxCount;
+        generateRounds();
+        loadRound();
+      });
+    })();
+  </script>
+</body>
+</html>
