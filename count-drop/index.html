@@ -139,9 +139,9 @@
     </div>
 
     <div class="cd-difficulty">
-      <label for="cdMaxSlider">Max:</label>
-      <input type="range" id="cdMaxSlider" min="5" max="10" value="10" step="1">
-      <span class="cd-diff-value" id="cdDiffValue">10</span>
+      <label for="cdMaxSlider">Difficulty: Count up to</label>
+      <input type="range" id="cdMaxSlider" min="5" max="10" value="5" step="1">
+      <span class="cd-diff-value" id="cdDiffValue">5</span>
     </div>
 
     <div class="cd-target" id="cdTarget">🐱 × 3</div>
@@ -169,7 +169,7 @@
       const ANIMALS = ['🐱', '🐶', '🐰', '🐼', '🐸', '🐵', '🐷', '🦊'];
       const ANIMAL_NAMES = { '🐱': 'Cats', '🐶': 'Dogs', '🐰': 'Bunnies', '🐼': 'Pandas', '🐸': 'Frogs', '🐵': 'Monkeys', '🐷': 'Pigs', '🦊': 'Foxes' };
       const TOTAL_ROUNDS = 10;
-      let maxCount = 10;
+      let maxCount = 5;
       let rounds = [];
       let round = 0;
       let currentAnimal = '';
