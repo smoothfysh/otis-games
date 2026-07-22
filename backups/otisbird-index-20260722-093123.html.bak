@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)file:///C:/Users/venom/My%20Drive/AI%20Projects/FlappyBird_Clone/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+    <title>Otis The Bird — A Cadence-X Bird Game</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100dvh; height: 100svh;
+            overflow: hidden;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            touch-action: none;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+        }
+        #score-display {
+            text-align: center;
+            color: white;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+            margin-top: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+        #score-display.show {
+            opacity: 1;
+        }
+        #high-score {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: clamp(0.8rem, 3vw, 1.1rem);
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+            pointer-events: none;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="500" height="888" style="width: 500px; height: 888.875px;"></canvas>
+        <div id="ui-overlay">
+            <div id="score-display" class="show">1</div>
+            <div id="high-score">BEST: 12</div>
+        </div>
+    </div>
+
+    <script>
+        // ─── Canvas Setup ───────────────────────────────────────────────────
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score-display');
+        const highScoreEl = document.getElementById('high-score');
+        const container = document.getElementById('gameContainer');
+
+        // ─── Colors ─────────────────────────────────────────────────────────
+        const C = {
+            skyTop: '#4dc9f6', skyBot: '#dcedc1',
+            gnd0: '#4a5568', gnd1: '#2d3436', gnd2: '#1a1a2e',
+            gndLine: '#636e72', grass: '#00b894',
+            p0: '#55efc4', p1: '#00b894', p2: '#00a381', rim: '#00cec9',
+            b0: '#fd79a8', b1: '#e84393',
+            beak: '#fdcb6e', eye: '#2d3436', white: '#ffffff',
+            overlay: 'rgba(0,0,0,0.45)',
+            panel: 'rgba(255,255,255,0.95)',
+            btn0: '#00b894', btn1: '#00a381',
+        };
+
+        // ─── Game Constants ─────────────────────────────────────────────────
+        const GRAVITY = 0.55;
+        const FLAP = -7.5;
+        const PIPE_SPEED = 2.2;
+        const MAX_PARTICLES = 40;
+
+        let W, H, GY, BR, PW, DP = 2;
+        let gSky, gGnd, gPipe, gRim, gBtn, gBird;
+
+        // ─── State ──────────────────────────────────────────────────────────
+        const S = {
+            bx: 0, by: 0, bvy: 0, br: 0, rot: 0,
+            pipes: [],
+            clouds: [],
+            px: [], py: [], pvx: [], pvy: [], pl: [], pm: [], pr: [], pc: [], pn: 0,
+            score: 0, high: 0,
+            state: 'menu',  // 'menu' | 'play' | 'over'
+            frame: 0, ptimer: 0, flash: 0, scroll: 0,
+            btn: null,
+        };
+
+        // ─── Resize ─────────────────────────────────────────────────────────
+        function resize() {
+            const r = container.getBoundingClientRect();
+            DP = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = r.width * DP;
+            canvas.height = r.height * DP;
+            canvas.style.width = r.width + 'px';
+            canvas.style.height = r.height + 'px';
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(DP, DP);
+
+            W = r.width; H = r.height;
+            BR = W * 0.06;
+            PW = Math.max(40, W * 0.08);
+            GY = H * 0.92;
+            S.bx = W * 0.25;
+            S.br = BR;
+
+            // Gradients
+            gSky = ctx.createLinearGradient(0, 0, 0, GY);
+            gSky.addColorStop(0, C.skyTop);
+            gSky.addColorStop(0.4, '#6dd5ed');
+            gSky.addColorStop(0.7, '#a8e6cf');
+            gSky.addColorStop(1, C.skyBot);
+
+            gGnd = ctx.createLinearGradient(0, GY, 0, H);
+            gGnd.addColorStop(0, C.gnd0);
+            gGnd.addColorStop(0.15, C.gnd1);
+            gGnd.addColorStop(1, C.gnd2);
+
+            gBird = ctx.createRadialGradient(-BR*0.2,-BR*0.2,BR*0.1,0,0,BR*1.1);
+            gBird.addColorStop(0, C.b0);
+            gBird.addColorStop(1, C.b1);
+
+            gPipe = ctx.createLinearGradient(0,0,PW,0);
+            gPipe.addColorStop(0, C.p0);
+            gPipe.addColorStop(0.3, C.p1);
+            gPipe.addColorStop(0.7, C.p1);
+            gPipe.addColorStop(1, C.p2);
+
+            gRim = ctx.createLinearGradient(0,0,PW+6,0);
+            gRim.addColorStop(0, C.p0);
+            gRim.addColorStop(0.3, C.rim);
+            gRim.addColorStop(0.7, C.rim);
+            gRim.addColorStop(1, C.p2);
+
+            gBtn = ctx.createLinearGradient(0,0,0,40);
+            gBtn.addColorStop(0, C.btn0);
+            gBtn.addColorStop(1, C.btn1);
+
+            // Clouds
+            S.clouds = [];
+            for (let i = 0; i < 5; i++) {
+                S.clouds.push({
+                    x: Math.random() * W, y: 20 + Math.random() * GY * 0.5,
+                    w: 40 + Math.random() * 60, sp: 0.15 + Math.random() * 0.2,
+                });
+            }
+        }
+
+        // ─── Drawing ───────────────────────────────────────────────────────
+        function drawSky() {
+            ctx.fillStyle = gSky;
+            ctx.fillRect(0, 0, W, GY);
+            ctx.fillStyle = 'rgba(255,255,255,0.35)';
+            for (let i = 0; i < 5; i++) {
+                const c = S.clouds[i];
+                const h = c.w * 0.3;
+                ctx.fillRect(c.x, c.y, c.w, h);
+                ctx.fillRect(c.x - c.w*0.2, c.y + 2, c.w*0.3, h*0.6);
+                ctx.fillRect(c.x + c.w*0.2, c.y + 2, c.w*0.3, h*0.6);
+            }
+        }
+
+        function drawGround() {
+            ctx.fillStyle = gGnd;
+            ctx.fillRect(0, GY, W, H - GY);
+            ctx.strokeStyle = C.gndLine;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, GY);
+            ctx.lineTo(W, GY);
+            ctx.stroke();
+            ctx.fillStyle = C.grass;
+            const off = S.scroll % 30;
+            for (let x = -off; x < W; x += 30) {
+                ctx.beginPath();
+                ctx.moveTo(x, GY);
+                ctx.lineTo(x + 4, GY - 6 - ((x * 7) % 7));
+                ctx.lineTo(x + 8, GY);
+                ctx.fill();
+            }
+        }
+
+        function drawPipe(x, t, b) {
+            ctx.fillStyle = gPipe;
+            ctx.fillRect(x, 0, PW, t);
+            ctx.fillRect(x, b, PW, H - b);
+            ctx.fillStyle = gRim;
+            ctx.fillRect(x - 3, t - 20, PW + 6, 20);
+            ctx.fillRect(x - 3, b, PW + 6, 20);
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(x - 2, t - 18);
+            ctx.lineTo(x + PW + 2, t - 18);
+            ctx.moveTo(x - 2, b + 2);
+            ctx.lineTo(x + PW + 2, b + 2);
+            ctx.stroke();
+        }
+
+        function drawBird(x, y, r, rot) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rot);
+            ctx.fillStyle = gBird;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, r, r * 0.82, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = C.b1;
+            ctx.beginPath();
+            ctx.ellipse(-r * 0.15, r * 0.12, r * 0.45, r * 0.3, -0.3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = 'rgba(255,255,255,0.12)';
+            ctx.beginPath();
+            ctx.ellipse(r * 0.15, r * 0.25, r * 0.35, r * 0.25, 0.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = C.beak;
+            ctx.beginPath();
+            ctx.moveTo(r * 0.8, -r * 0.08);
+            ctx.lineTo(r * 1.3, r * 0.05);
+            ctx.lineTo(r * 0.8, r * 0.18);
+            ctx.fill();
+            ctx.fillStyle = C.white;
+            ctx.beginPath();
+            ctx.arc(r * 0.38, -r * 0.28, r * 0.25, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = C.eye;
+            ctx.beginPath();
+            ctx.arc(r * 0.42, -r * 0.24, r * 0.13, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = C.white;
+            ctx.beginPath();
+            ctx.arc(r * 0.48, -r * 0.32, r * 0.05, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // ─── Particles (typed arrays — no GC) ───────────────────────────────
+        function spawnParticles(x, y, n) {
+            for (let i = 0; i < n && S.pn < MAX_PARTICLES; i++) {
+                S.px[S.pn] = x;
+                S.py[S.pn] = y;
+                S.pvx[S.pn] = (Math.random() - 0.5) * 5;
+                S.pvy[S.pn] = (Math.random() - 0.5) * 5 - 2;
+                S.pl[S.pn] = 20 + Math.random() * 20;
+                S.pm[S.pn] = 40;
+                S.pr[S.pn] = 2 + Math.random() * 3;
+                S.pc[S.pn] = Math.random() > 0.5 ? 0 : 1;
+                S.pn++;
+            }
+        }
+
+        function updateParticles() {
+            let w = 0;
+            for (let i = 0; i < S.pn; i++) {
+                S.px[i] += S.pvx[i];
+                S.py[i] += S.pvy[i];
+                S.pvy[i] += 0.1;
+                if (--S.pl[i] > 0) {
+                    if (w !== i) {
+                        S.px[w] = S.px[i]; S.py[w] = S.py[i];
+                        S.pvx[w] = S.pvx[i]; S.pvy[w] = S.pvy[i];
+                        S.pl[w] = S.pl[i]; S.pm[w] = S.pm[i];
+                        S.pr[w] = S.pr[i]; S.pc[w] = S.pc[i];
+                    }
+                    w++;
+                }
+            }
+            S.pn = w;
+        }
+
+        function drawParticles() {
+            for (let i = 0; i < S.pn; i++) {
+                const a = S.pl[i] / S.pm[i];
+                const s = S.pr[i] * a;
+                ctx.globalAlpha = a;
+                ctx.fillStyle = S.pc[i] ? C.b0 : C.beak;
+                ctx.fillRect(S.px[i] - s, S.py[i] - s, s * 2, s * 2);
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        // ─── Game Logic ─────────────────────────────────────────────────────
+        function spawnPipe() {
+            const gap = H * 0.28 + Math.random() * (H * 0.06);
+            const margin = 50;
+            const top = margin + Math.random() * (GY - gap - margin * 2);
+            S.pipes.push({ x: W + 10, top, bottom: top + gap, scored: false });
+        }
+
+        function reset() {
+            S.by = H * 0.35; S.bvy = 0; S.rot = 0;
+            S.pipes = []; S.pn = 0;
+            S.score = 0; S.frame = 0; S.ptimer = 0; S.flash = 0;
+            S.scroll = 0;
+            scoreEl.textContent = '0';
+            scoreEl.className = '';
+        }
+
+        function collides() {
+            const r = BR * 0.45;
+            if (S.by + r > GY || S.by - r < 0) return true;
+            for (let i = 0; i < S.pipes.length; i++) {
+                const p = S.pipes[i];
+                if (S.bx + r > p.x && S.bx - r < p.x + PW) {
+                    if (S.by - r < p.top || S.by + r > p.bottom) return true;
+                }
+            }
+            return false;
+        }
+
+        function die() {
+            S.state = 'over';
+            S.flash = 6;
+            spawnParticles(S.bx, S.by, 15);
+            S.bvy = -2;
+        }
+
+        // ─── Tick ───────────────────────────────────────────────────────────
+        function tick() {
+            if (S.state === 'over') {
+                if (S.flash > 0) S.flash--;
+                updateParticles();
+                render();
+                return;
+            }
+
+            S.frame++;
+
+            // Physics
+            S.bvy += GRAVITY;
+            S.by += S.bvy;
+            const tr = Math.max(-0.4, Math.min(1.2, S.bvy * 0.05));
+            S.rot += (tr - S.rot) * 0.12;
+
+            if (S.by + BR > GY) {
+                S.by = GY - BR;
+                if (S.state === 'play') { die(); return; }
+            }
+
+            // Pipes
+            if (S.state === 'play') {
+                S.ptimer++;
+                const iv = Math.max(60, 95 - Math.min(30, S.score * 1.5));
+                if (S.ptimer >= iv) { spawnPipe(); S.ptimer = 0; }
+            }
+
+            const sm = 1 + S.score * 0.008;
+            for (let i = S.pipes.length - 1; i >= 0; i--) {
+                S.pipes[i].x -= PIPE_SPEED * sm;
+                if (S.pipes[i].x + PW < -20) S.pipes.splice(i, 1);
+            }
+
+            // Score
+            for (let i = 0; i < S.pipes.length; i++) {
+                const p = S.pipes[i];
+                if (!p.scored && p.x + PW < S.bx - BR) {
+                    p.scored = true;
+                    S.score++;
+                    scoreEl.textContent = S.score;
+                    if (S.score > S.high) {
+                        S.high = S.score;
+                        localStorage.setItem('fluxbird_high', S.high);
+                        highScoreEl.textContent = 'BEST: ' + S.high;
+                    }
+                    spawnParticles(W * 0.3, p.top + H * 0.15, 8);
+                }
+            }
+
+            if (S.state === 'play' && collides()) { die(); return; }
+
+            // Clouds
+            for (let i = 0; i < 5; i++) {
+                const c = S.clouds[i];
+                c.x -= c.sp;
+                if (c.x + c.w < -20) c.x = W + 20;
+            }
+            S.scroll += PIPE_SPEED * 0.5;
+
+            updateParticles();
+            render();
+        }
+
+        // ─── Render ─────────────────────────────────────────────────────────
+        function render() {
+            ctx.clearRect(0, 0, W, H);
+
+            drawSky();
+            drawGround();
+
+            for (let i = 0; i < S.pipes.length; i++) {
+                const p = S.pipes[i];
+                drawPipe(p.x, p.top, p.bottom);
+            }
+
+            drawParticles();
+
+            if (S.state !== 'over' || S.flash % 2 === 0) {
+                drawBird(S.bx, S.by, BR, S.rot);
+            }
+
+            // Menu
+            if (S.state === 'menu') {
+                ctx.fillStyle = C.overlay;
+                ctx.fillRect(0, 0, W, H);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = C.white;
+                ctx.font = '800 ' + Math.min(W * 0.1, 48) + 'px system-ui,sans-serif';
+                ctx.fillText('OTIS THE BIRD', W / 2, H * 0.28);
+                ctx.font = Math.min(W * 0.04, 16) + 'px system-ui,sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                ctx.fillText('Tap or Click to Fly Otis through the pipes!', W / 2, H * 0.38);
+                const bobY = H * 0.52 + (S.frame % 120 < 60 ? (S.frame % 60) * 0.27 : (60 - S.frame % 60) * 0.27) - 8;
+                drawBird(W / 2, bobY, BR * 1.3, 0);
+                ctx.fillStyle = C.white;
+                ctx.globalAlpha = 0.6 + (S.frame % 100 < 50 ? (S.frame % 50) * 0.016 : (50 - S.frame % 50) * 0.016);
+                ctx.font = Math.min(W * 0.035, 14) + 'px system-ui,sans-serif';
+                ctx.fillText('↑  SPACE  ·  CLICK  ·  TAP', W / 2, H * 0.75);
+                ctx.globalAlpha = 1;
+            }
+
+            // Game Over
+            if (S.state === 'over') {
+                ctx.fillStyle = C.overlay;
+                ctx.fillRect(0, 0, W, H);
+                const pw = Math.min(280, W * 0.78);
+                const ph = Math.min(200, H * 0.42);
+                const px = (W - pw) / 2;
+                const py = (H - ph) / 2;
+                ctx.fillStyle = C.panel;
+                ctx.beginPath();
+                ctx.roundRect(px, py, pw, ph, 16);
+                ctx.fill();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = C.gnd1;
+                ctx.font = '800 ' + Math.min(W * 0.05, 26) + 'px system-ui,sans-serif';
+                ctx.fillText('GAME OVER', W / 2, py + ph * 0.2);
+                ctx.fillStyle = C.gndLine;
+                ctx.font = Math.min(W * 0.03, 13) + 'px system-ui,sans-serif';
+                ctx.fillText('SCORE', W / 2, py + ph * 0.37);
+                ctx.fillStyle = C.gnd1;
+                ctx.font = '700 ' + Math.min(W * 0.065, 34) + 'px system-ui,sans-serif';
+                ctx.fillText(S.score, W / 2, py + ph * 0.5);
+                ctx.fillStyle = C.gndLine;
+                ctx.font = Math.min(W * 0.03, 13) + 'px system-ui,sans-serif';
+                ctx.fillText('BEST', W / 2, py + ph * 0.63);
+                ctx.fillStyle = C.beak;
+                ctx.font = '700 ' + Math.min(W * 0.055, 28) + 'px system-ui,sans-serif';
+                ctx.fillText(S.high, W / 2, py + ph * 0.76);
+                if (S.score >= S.high && S.score > 0) {
+                    ctx.fillStyle = C.beak;
+                    ctx.font = '600 ' + Math.min(W * 0.025, 11) + 'px system-ui,sans-serif';
+                    ctx.fillText('★ NEW BEST!', W / 2, py + ph * 0.88);
+                }
+                const bx = W / 2 - 55;
+                const by2 = py + ph + 16;
+                ctx.fillStyle = gBtn;
+                ctx.beginPath();
+                ctx.roundRect(bx, by2, 110, 40, 20);
+                ctx.fill();
+                ctx.fillStyle = C.white;
+                ctx.font = '700 ' + Math.min(W * 0.032, 14) + 'px system-ui,sans-serif';
+                ctx.fillText('PLAY AGAIN', W / 2, by2 + 20);
+                S.btn = { x: bx, y: by2, w: 110, h: 40 };
+            } else {
+                S.btn = null;
+            }
+
+            if (S.flash > 0) {
+                ctx.fillStyle = 'rgba(255,255,255,' + (S.flash * 0.05) + ')';
+                ctx.fillRect(0, 0, W, H);
+            }
+        }
+
+        // ─── Controls ───────────────────────────────────────────────────────
+        function handle(cx, cy) {
+            if (S.state === 'menu') {
+                S.state = 'play';
+                reset();
+                S.bvy = FLAP;
+                spawnParticles(S.bx - BR * 0.5, S.by, 5);
+                scoreEl.className = 'show';
+                return;
+            }
+            if (S.state === 'play') {
+                S.bvy = FLAP;
+                spawnParticles(S.bx - BR * 0.5, S.by, 3);
+                return;
+            }
+            if (S.state === 'over') {
+                if (S.btn && cx != null) {
+                    const r = canvas.getBoundingClientRect();
+                    const mx = (cx - r.left) / r.width * W;
+                    const my = (cy - r.top) / r.height * H;
+                    const b = S.btn;
+                    if (mx >= b.x && mx <= b.x + b.w && my >= b.y && my <= b.y + b.h) {
+                        S.state = 'menu'; reset(); scoreEl.className = ''; return;
+                    }
+                }
+                S.state = 'menu'; reset(); scoreEl.className = '';
+            }
+        }
+
+        // ─── Event Listeners ───────────────────────────────────────────────
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowUp' || e.code === 'Space') {
+                e.preventDefault(); handle();
+            }
+        });
+        canvas.addEventListener('mousedown', (e) => handle(e.clientX, e.clientY));
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const t = e.touches[0];
+            handle(t.clientX, t.clientY);
+        }, { passive: false });
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // ─── Frame Rate Limiter ─────────────────────────────────────────────
+        let lastTime = 0;
+        const TICK_RATE = 1000 / 60;  // 60fps max
+        let accumulator = 0;
+
+        function loop(time) {
+            const dt = time - lastTime;
+            lastTime = time;
+
+            // Cap dt to prevent spiral of death (e.g., tab was backgrounded)
+            if (dt > 200) {
+                accumulator = 0;
+            } else {
+                accumulator += dt;
+            }
+
+            // Only tick when we've accumulated enough time
+            // This caps the game at 60fps regardless of display refresh rate
+            if (accumulator >= TICK_RATE) {
+                accumulator -= TICK_RATE;
+                tick();
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        // ─── Init ───────────────────────────────────────────────────────────
+        window.addEventListener('resize', resize);
+        resize();
+        S.high = parseInt(localStorage.getItem('fluxbird_high')) || 0;
+        highScoreEl.textContent = 'BEST: ' + S.high;
+        reset();
+        S.state = 'menu';
+        requestAnimationFrame(loop);
+    </script>
+
+</body></html>

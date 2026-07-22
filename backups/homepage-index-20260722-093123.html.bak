@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Otis Games — by Cadence-X.com</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23C9B1FF'/><polygon points='16,6 20,14 29,14 22,20 25,29 16,24 7,29 10,20 3,14 12,14' fill='%23FFD700' opacity='0.8'/></svg>">
+  <style>
+    /* Homepage-specific styles */
+    .home-wrapper {
+      width: 100%; height: 100dvh; overflow-y: auto;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 40px 16px 60px;
+      position: relative;
+    }
+    /* Floating background shapes */
+    .bg-shapes {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+    }
+    .bg-shape {
+      position: absolute; border-radius: 50%; opacity: 0.15;
+      animation: float 4s ease-in-out infinite;
+    }
+    .bg-shape:nth-child(1) { width: 80px; height: 80px; background: var(--pink); top: 10%; left: 5%; }
+    .bg-shape:nth-child(2) { width: 60px; height: 60px; background: var(--mint); top: 60%; left: 80%; animation-delay: -1s; }
+    .bg-shape:nth-child(3) { width: 100px; height: 100px; background: var(--lavender); top: 30%; left: 85%; animation-delay: -2s; border-radius: 20%; }
+    .bg-shape:nth-child(4) { width: 50px; height: 50px; background: var(--peach); top: 70%; left: 10%; animation-delay: -0.5s; }
+    .bg-shape:nth-child(5) { width: 70px; height: 70px; background: var(--sky); top: 80%; left: 50%; animation-delay: -3s; border-radius: 30% 70% 50% 50%; }
+
+    .home-content { position: relative; z-index: 1; width: 100%; max-width: 800px; }
+
+    /* Title section */
+    .title-section { text-align: center; margin-bottom: 40px; }
+    .title-section h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      background: linear-gradient(135deg, var(--violet), var(--coral), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: float 3s ease-in-out infinite;
+    }
+    .title-section .subtitle {
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      color: var(--text); opacity: 0.6; margin-top: 4px;
+    }
+
+    /* Portal grid */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px; padding: 0 8px;
+    }
+    .portal-card {
+      aspect-ratio: 1; text-align: center; gap: 6px;
+      position: relative;
+    }
+    .portal-card .icon { font-size: 2.5rem; }
+    .portal-card .name { font-size: 0.85rem; font-weight: 700; }
+    .portal-card .age-badge {
+      position: absolute; top: 8px; right: 8px;
+      font-size: 0.7rem; background: white; border-radius: 12px;
+      padding: 2px 8px; font-weight: 600; box-shadow: 0 2px 4px var(--shadow);
+    }
+    .portal-card:nth-child(1) { background: var(--pink); }
+    .portal-card:nth-child(2) { background: var(--mint); }
+    .portal-card:nth-child(3) { background: var(--sky); }
+    .portal-card:nth-child(4) { background: var(--lavender); }
+    .portal-card:nth-child(5) { background: var(--peach); }
+
+    /* Footer */
+    .home-footer {
+      margin-top: 48px; text-align: center;
+      font-size: 0.8rem; opacity: 0.5; z-index: 1; position: relative;
+    }
+
+    /* Floating decorative elements */
+    .deco-triangle {
+      position: fixed; width: 0; height: 0; pointer-events: none; z-index: 0;
+      border-left: 20px solid transparent; border-right: 20px solid transparent;
+      border-bottom: 35px solid var(--pink); opacity: 0.08;
+      animation: float 5s ease-in-out infinite;
+    }
+    .deco-triangle:nth-child(2) { top: 15%; left: 8%; border-bottom-color: var(--mint); animation-delay: -1s; }
+    .deco-triangle:nth-child(3) { top: 75%; right: 12%; border-bottom-color: var(--lavender); animation-delay: -2s; }
+
+    @media (max-width: 480px) {
+      .portal-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .home-wrapper { padding: 24px 12px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background decor -->
+  <div class="deco-triangle" style="top:5%;left:5%"></div>
+  <div class="deco-triangle" style="top:20%;left:90%"></div>
+  <div class="deco-triangle" style="top:70%;left:2%"></div>
+  <div class="bg-shapes">
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+    <div class="bg-shape"></div>
+  </div>
+
+  <div class="home-wrapper">
+    <div class="home-content">
+      <div class="title-section">
+        <h1>Otis Games</h1>
+        <div class="subtitle">by Cadence-X.com</div>
+      </div>
+
+      <div class="portal-grid">
+        <a href="shape-sorter/index.html" class="portal-card">
+          <span class="age-badge">⭐ 2-3</span>
+          <span class="icon">🔵</span>
+          <span class="name">Shape Sorter</span>
+        </a>
+        <a href="color-splash/index.html" class="portal-card">
+          <span class="age-badge">⭐ 2-3</span>
+          <span class="icon">🎨</span>
+          <span class="name">Color Splash</span>
+        </a>
+        <a href="shape-pop/index.html" class="portal-card">
+          <span class="age-badge">⭐ 2-3</span>
+          <span class="icon">💥</span>
+          <span class="name">Shape Pop</span>
+        </a>
+        <a href="otisbird/index.html" class="portal-card">
+          <span class="age-badge">⭐⭐ 4-5</span>
+          <span class="icon">🐦</span>
+          <span class="name">Otis Bird</span>
+        </a>
+        <a href="memory-path/index.html" class="portal-card">
+          <span class="age-badge">⭐⭐ 4-5</span>
+          <span class="icon">💎</span>
+          <span class="name">Memory Path</span>
+        </a>
+      </div>
+
+      <div class="home-footer">
+        © Otis Games by Cadence-X.com
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/shared.js"></script>
+  <script>
+    // Add gentle sound on portal tap
+    document.querySelectorAll('.portal-card').forEach(card => {
+      card.addEventListener('click', () => {
+        try { OtisAudio.playPop(); } catch(e) {}
+      });
+    });
+  </script>
+</body>
+</html>

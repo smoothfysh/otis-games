@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Memory Path — Otis Games</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='16,2 30,16 16,30 2,16' fill='%23FFD700'/></svg>">
+  <style>
+    .memory-path { width: 100%; height: 100dvh; display: flex; flex-direction: column; align-items: center; background: linear-gradient(180deg, #F5F0EB 0%, #E0E8F5 100%); position: relative; overflow: hidden; padding-top: var(--header-h); }
+
+    .mp-info {
+      position: absolute; top: 60px; text-align: center;
+    }
+    .mp-level { font-size: 0.85rem; opacity: 0.5; }
+    .mp-phase {
+      font-size: clamp(1rem, 3vw, 1.3rem); font-weight: 600;
+      color: var(--violet); margin-top: 4px; animation: fadeIn 0.3s ease;
+    }
+
+    /* Isometric path area */
+    .mp-path {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      width: 100%; position: relative;
+    }
+
+    .mp-gems-container {
+      display: flex; gap: 16px; align-items: center;
+      transform: skewX(-10deg) rotateX(20deg);
+      padding: 20px;
+    }
+    .mp-gem {
+      width: 64px; height: 64px; border-radius: 16px;
+      cursor: pointer; touch-action: manipulation;
+      transition: var(--transition); position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .mp-gem:active { transform: scale(0.9) !important; }
+
+    .mp-gem.lit {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+      animation: glow 0.8s ease;
+    }
+    .mp-gem.lit::after {
+      content: ''; position: absolute; inset: -4px;
+      border-radius: 20px;
+      background: rgba(255, 215, 0, 0.2);
+      animation: fadeIn 0.3s ease;
+    }
+    .mp-gem.wrong { animation: wobble 0.4s ease; }
+    .mp-gem.correct-tap { transform: scale(0.85); }
+
+    .mp-gem-svg { width: 100%; height: 100%; }
+
+    .mp-replay-btn {
+      position: absolute; bottom: 80px;
+      padding: 12px 24px; border: none; border-radius: 16px;
+      background: var(--coral); color: white; font-weight: 600; cursor: pointer;
+      font-size: 1rem; transition: var(--transition); touch-action: manipulation;
+      display: none;
+    }
+    .mp-replay-btn:active { transform: scale(0.92); }
+    .mp-replay-btn.visible { display: block; animation: fadeIn 0.3s ease; }
+
+    .mp-progress-dots {
+      position: absolute; bottom: 40px; display: flex; gap: 6px;
+    }
+    .mp-dot { width: 10px; height: 10px; border-radius: 50%; background: #DDD; transition: var(--transition); }
+    .mp-dot.done { background: var(--teal); }
+
+    @media (max-width: 480px) {
+      .mp-gem { width: 48px; height: 48px; }
+      .mp-gems-container { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="memory-path">
+    <div class="game-header">
+      <a href="../index.html" class="back-link">←</a>
+      <span style="font-weight:700;font-size:0.9rem;color:var(--gold)">Memory Path</span>
+      <a href="../index.html" class="brand-link">Otis Games</a>
+    </div>
+    <div class="mp-info">
+      <div class="mp-level" id="mpLevel">Level 1</div>
+      <div class="mp-phase" id="mpPhase">👀 Watch the pattern...</div>
+    </div>
+    <div class="mp-path" id="mpPath"></div>
+    <button class="mp-replay-btn" id="mpReplay">🔁 Watch Again</button>
+    <div class="mp-progress-dots" id="mpDots"></div>
+  </div>
+
+  <script src="../scripts/shared.js"></script>
+  <script>
+    (function() {
+      const GEM_COLORS = ['#FFB5C2', '#B5EAD7', '#C9B1FF', '#FFDAB9', '#B5D8EB', '#FF7B89', '#7BC8A4'];
+      const LEVELS = [
+        { gemCount: 3, seqLength: 3 },
+        { gemCount: 3, seqLength: 3 },
+        { gemCount: 4, seqLength: 4 },
+        { gemCount: 4, seqLength: 4 },
+        { gemCount: 5, seqLength: 5 },
+      ];
+
+      let level = 0;
+      let sequence = [];
+      let playerSeq = [];
+      let isShowing = false;
+      let canTap = false;
+      let gemElements = [];
+
+      const pathEl = document.getElementById('mpPath');
+      const levelEl = document.getElementById('mpLevel');
+      const phaseEl = document.getElementById('mpPhase');
+      const replayBtn = document.getElementById('mpReplay');
+      const dotsEl = document.getElementById('mpDots');
+
+      function gemSVG(color) {
+        // Diamond-shaped gem
+        return `<svg viewBox="0 0 64 64" class="mp-gem-svg">
+          <polygon points="32,4 56,32 32,60 8,32" fill="${color}" stroke="white" stroke-width="2"/>
+          <polygon points="32,12 48,32 32,52 16,32" fill="${color}" opacity="0.6"/>
+          <polygon points="32,20 40,32 32,44 24,32" fill="white" opacity="0.2"/>
+        </svg>`;
+      }
+
+      function loadLevel() {
+        if (level >= LEVELS.length) {
+          createCelebration(document.body, 'Amazing memory!', '🧠', () => {
+            level = 0; loadLevel();
+          });
+          levelEl.textContent = 'All done! 🎉';
+          return;
+        }
+
+        const lvl = LEVELS[level];
+        levelEl.textContent = `Level ${level + 1}`;
+        phaseEl.textContent = '👀 Watch the pattern...';
+        replayBtn.classList.remove('visible');
+        pathEl.innerHTML = '';
+        dotsEl.innerHTML = '';
+        gemElements = [];
+        playerSeq = [];
+        canTap = false;
+
+        // Progress dots
+        for (let i = 0; i < LEVELS.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'mp-dot' + (i < level ? ' done' : '');
+          dotsEl.appendChild(dot);
+        }
+
+        // Create gems
+        const colors = shuffleArray(GEM_COLORS).slice(0, lvl.gemCount);
+        const container = document.createElement('div');
+        container.className = 'mp-gems-container';
+
+        colors.forEach((color, idx) => {
+          const gem = document.createElement('div');
+          gem.className = 'mp-gem';
+          gem.dataset.idx = idx;
+          gem.innerHTML = gemSVG(color);
+          gem.style.background = 'white';
+          gem.style.borderRadius = '16px';
+          gem.addEventListener('click', () => handleGemTap(idx));
+          container.appendChild(gem);
+          gemElements.push(gem);
+        });
+
+        pathEl.appendChild(container);
+
+        // Generate sequence
+        sequence = [];
+        for (let i = 0; i < lvl.seqLength; i++) {
+          sequence.push(Math.floor(Math.random() * lvl.gemCount));
+        }
+
+        // Show sequence after a brief pause
+        setTimeout(showSequence, 600);
+      }
+
+      function showSequence() {
+        isShowing = true;
+        canTap = false;
+        phaseEl.textContent = '👀 Watch the pattern...';
+        replayBtn.classList.remove('visible');
+
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i > 0) {
+            gemElements[sequence[i - 1]].classList.remove('lit');
+            gemElements[sequence[i - 1]].style.transform = '';
+          }
+          if (i >= sequence.length) {
+            clearInterval(interval);
+            isShowing = false;
+            phaseEl.textContent = '✨ Your turn!';
+            canTap = true;
+            playerSeq = [];
+            return;
+          }
+          gemElements[sequence[i]].classList.add('lit');
+          gemElements[sequence[i]].style.transform = 'scale(1.1)';
+          OtisAudio.playChime();
+          i++;
+        }, 700);
+      }
+
+      function handleGemTap(idx) {
+        if (!canTap || isShowing) return;
+
+        gemElements[idx].classList.add('correct-tap');
+        OtisAudio.playPop();
+        setTimeout(() => gemElements[idx].classList.remove('correct-tap'), 150);
+
+        playerSeq.push(idx);
+        const pos = playerSeq.length - 1;
+
+        if (playerSeq[pos] !== sequence[pos]) {
+          // Wrong!
+          canTap = false;
+          gemElements[idx].classList.add('wrong');
+          OtisAudio.playWobble();
+          phaseEl.textContent = '🤔 Not quite... try again!';
+          replayBtn.classList.add('visible');
+          setTimeout(() => gemElements[idx].classList.remove('wrong'), 500);
+          return;
+        }
+
+        if (playerSeq.length === sequence.length) {
+          // Complete!
+          canTap = false;
+          phaseEl.textContent = '✅ Great job!';
+          OtisAudio.playFanfare();
+          sequence.forEach((gemIdx, i) => {
+            setTimeout(() => {
+              const rect = gemElements[gemIdx].getBoundingClientRect();
+              OtisParticles.burst(rect.left + 32, rect.top + 32, GEM_COLORS[i % GEM_COLORS.length], 10);
+            }, i * 100);
+          });
+          level++;
+          setTimeout(loadLevel, 1500);
+        }
+      }
+
+      replayBtn.addEventListener('click', showSequence);
+
+      loadLevel();
+    })();
+  </script>
+</body>
+</html>

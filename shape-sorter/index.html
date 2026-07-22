@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Shape Sorter — Otis Games</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='16,4 28,28 4,28' fill='%23FFB5C2'/></svg>">
+  <style>
+    .shape-sorter { width: 100%; height: 100dvh; display: flex; flex-direction: column; position: relative; background: var(--bg); overflow: hidden; padding-top: var(--header-h); }
+
+    .ss-back-link {
+      font-size: 1.3rem; text-decoration: none; color: var(--text);
+      padding: 8px 18px; border-radius: 12px;
+      background: rgba(255,255,255,0.9); box-shadow: 0 2px 8px var(--shadow);
+      font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+      transition: var(--transition);
+    }
+    .ss-back-link:active { transform: scale(0.92); }
+
+    .ss-title-group { text-align: center; padding: 20px 12px 4px; }
+    .ss-title { font-size: clamp(2.2rem, 7vw, 3.5rem) !important; font-weight: 800; color: var(--coral); margin-bottom: 2px; }
+    .ss-subtitle { font-size: clamp(1rem, 3vw, 1.3rem); color: var(--text); opacity: 0.65; margin: 0; }
+
+    .ss-play-area { flex: 1; display: flex; position: relative; padding: 24px 32px; gap: 20px; }
+    .ss-shapes, .ss-slots { flex: 1; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 16px; position: relative; }
+
+    .ss-shape {
+      width: 64px; height: 64px; cursor: grab; touch-action: none;
+      transition: transform 0.2s, box-shadow 0.3s; z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+    .ss-shape:active { cursor: grabbing; transform: scale(1.15); box-shadow: 0 8px 16px rgba(0,0,0,0.25); }
+    .ss-shape.dragging { z-index: 100; opacity: 0.9; transform: scale(1.25); box-shadow: 0 12px 24px rgba(0,0,0,0.3); }
+
+    .ss-slot {
+      width: 72px; height: 72px; border: 3px dashed var(--shadow); border-radius: 12px;
+      opacity: 0.5; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition), box-shadow 0.3s;
+      background: rgba(247, 247, 247, 0.8);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .ss-slot.hover { opacity: 1; border-color: var(--coral); transform: scale(1.1); box-shadow: 0 6px 12px rgba(241, 115, 133, 0.3); }
+    .ss-slot.filled { opacity: 0; pointer-events: none; transform: scale(0.9); }
+
+    .ss-score { text-align: center; padding: 8px 8px 24px; font-size: 0.9rem; color: var(--text); opacity: 0.6; }
+
+    .ss-zone-label {
+      position: absolute; top: -8px; font-size: 0.75rem; font-weight: 600; opacity: 0.5;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--coral);
+    }
+
+    @media (max-width: 768px) {
+      .ss-play-area { flex-direction: column; padding: 16px; gap: 12px; }
+      .ss-shapes, .ss-slots { gap: 12px; }
+      .ss-shape { width: 56px; height: 56px; }
+      .ss-slot { width: 64px; height: 64px; }
+      .ss-shapes { max-width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .ss-shape { width: 48px; height: 48px; padding: 6px; }
+      .ss-slot { width: 56px; height: 56px; }
+      .ss-shapes, .ss-slots { gap: 10px; }
+      .ss-play-area { padding: 12px; gap: 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .ss-shape { width: 42px; height: 42px; padding: 5px; }
+      .ss-slot { width: 48px; height: 48px; border-width: 2px; }
+      .ss-shapes, .ss-slots { gap: 8px; }
+      .ss-play-area { padding: 8px; gap: 8px; }
+    }
+
+    .ss-shapes { margin: 0 auto; border-right: 2px solid var(--shadow); }
+    .ss-slots { margin: 0 auto; }
+    @media (max-width: 768px) {
+      .ss-shapes { border-right: none; border-bottom: 2px solid var(--shadow); padding-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shape-sorter">
+    <div class="game-header">
+      <a href="../index.html" class="ss-back-link">← Back</a>
+    </div>
+    <div class="ss-title-group">
+      <div class="ss-title">Shape Sorter</div>
+      <p class="ss-subtitle">Drag each shape onto its matching shadow!</p>
+    </div>
+    <div class="ss-play-area" id="playArea">
+      <div class="ss-shapes" id="shapesContainer">
+        <span class="ss-zone-label" style="left:16px">Shapes</span>
+      </div>
+      <div class="ss-slots" id="slotsContainer">
+        <span class="ss-zone-label" style="right:16px">Shadow</span>
+      </div>
+    </div>
+    <div class="ss-score" id="ssScore">Round 1 of 3</div>
+    <div class="game-footer"><span>© Otis Games by Cadence-X.com</span></div>
+  </div>
+
+  <script src="../scripts/shared.js"></script>
+  <script>
+    (function() {
+      const SHAPES = [
+        { id: 'circle', path: '<circle cx="50" cy="50" r="40"/>' },
+        { id: 'square', path: '<rect x="10" y="10" width="80" height="80" rx="4"/>' },
+        { id: 'triangle', path: '<polygon points="50,5 95,90 5,90"/>' },
+        { id: 'star', path: '<polygon points="50,5 61,35 95,35 68,55 79,90 50,68 21,90 32,55 5,35 39,35"/>' },
+        { id: 'diamond', path: '<polygon points="50,5 90,50 50,95 10,50"/>' },
+        { id: 'hexagon', path: '<polygon points="50,10 80,20 80,50 50,80 20,50 20,20"/>' },
+      ];
+      const COLORS = ['#FFB5C2', '#B5EAD7', '#C9B1FF', '#FFDAB9', '#B5D8EB', '#FFFFB5'];
+      const ROUNDS = [{ count: 4 }, { count: 5 }, { count: 6 }];
+
+      let round = 0;
+      let matched = 0;
+      let totalShapes = [];
+      let dragState = null;
+      let isDragging = false;
+
+      const playArea = document.getElementById('playArea');
+      const shapesContainer = document.getElementById('shapesContainer');
+      const slotsContainer = document.getElementById('slotsContainer');
+      const scoreEl = document.getElementById('ssScore');
+
+      function shapeToSVG(shape, color = 'currentColor', size = '100%') {
+        return `<svg viewBox="0 0 100 100" style="width:${size};height:${size}" fill="${color}">${shape.path}</svg>`;
+      }
+
+      function startRound() {
+        if (round >= ROUNDS.length) {
+          createCelebration(document.body, 'You matched them all!', '🌈', () => {
+            round = 0; startRound();
+          });
+          scoreEl.textContent = 'All done! 🎉';
+          return;
+        }
+
+        shapesContainer.innerHTML = '<span class="ss-zone-label" style="left:16px">Shapes</span>';
+        slotsContainer.innerHTML = '<span class="ss-zone-label" style="right:16px">Shadow</span>';
+        matched = 0;
+        scoreEl.textContent = `Round ${round + 1} of ${ROUNDS.length}`;
+
+        // Pick shapes for this round
+        const shuffled = shuffleArray(SHAPES);
+        totalShapes = shuffled.slice(0, ROUNDS[round].count);
+
+        // Create shapes (draggable) - using flexbox layout
+        totalShapes.forEach((shape, i) => {
+          const el = document.createElement('div');
+          el.className = 'ss-shape';
+          el.dataset.shapeId = shape.id;
+          el.dataset.originalIndex = i; // Store for restoration
+          const color = COLORS[i % COLORS.length];
+          el.innerHTML = shapeToSVG(shape, color);
+          el.style.color = color;
+          el.style.animation = `float ${2 + i * 0.3}s ease-in-out infinite`;
+          shapesContainer.appendChild(el);
+
+          // Touch / mouse drag
+          el.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            el.classList.add('dragging');
+            const rect = el.getBoundingClientRect();
+            dragState = { el, shapeId: shape.id, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, startX: rect.left, startY: rect.top };
+            el.style.position = 'fixed';
+            el.style.left = `${rect.left}px`;
+            el.style.top = `${rect.top}px`;
+            el.style.width = `${rect.width}px`;
+            el.style.height = `${rect.height}px`;
+            el.style.animation = 'none';
+          });
+        });
+
+        // Create slots - use shuffled order for visual variety
+        const shuffledSlots = shuffleArray([...totalShapes]); // Create a copy and shuffle it
+        shuffledSlots.forEach((shape, i) => {
+          const slot = document.createElement('div');
+          slot.className = 'ss-slot';
+          slot.dataset.shapeId = shape.id;
+          slot.innerHTML = shapeToSVG(shape, '#2D3436', '60%');
+          slotsContainer.appendChild(slot);
+        });
+
+        isDragging = true;
+      }
+
+      function onPointerMove(e) {
+        if (!dragState) return;
+        dragState.el.style.left = `${e.clientX - dragState.offsetX}px`;
+        dragState.el.style.top = `${e.clientY - dragState.offsetY}px`;
+
+        // Check hover over slots
+        document.querySelectorAll('.ss-slot:not(.filled)').forEach(slot => {
+          const r = slot.getBoundingClientRect();
+          const hover = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+          slot.classList.toggle('hover', hover);
+        });
+      }
+
+      function onPointerUp(e) {
+        if (!dragState) return;
+        dragState.el.classList.remove('dragging');
+
+        // Check drop on matching slot
+        let dropped = false;
+        document.querySelectorAll('.ss-slot:not(.filled)').forEach(slot => {
+          const r = slot.getBoundingClientRect();
+          if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+            if (slot.dataset.shapeId === dragState.shapeId) {
+              // Correct match!
+              slot.classList.add('filled');
+              dragState.el.remove();
+              matched++;
+              OtisAudio.playChime();
+              OtisParticles.burst(e.clientX, e.clientY, '#FFD700', 16);
+              dropped = true;
+              if (matched >= totalShapes.length) {
+                OtisAudio.playFanfare();
+                setTimeout(() => {
+                  round++;
+                  startRound();
+                }, 800);
+              }
+            } else {
+              // Wrong — wobble and return to proper position
+              OtisAudio.playWobble();
+              slot.classList.remove('hover');
+              // Reset position - flexbox will handle layout
+              dragState.el.style.position = '';
+              dragState.el.style.left = '';
+              dragState.el.style.top = '';
+              dragState.el.style.width = '';
+              dragState.el.style.height = '';
+              dragState.el.style.animation = `float ${2 + Math.random()}s ease-in-out infinite`;
+              dropped = true;
+            }
+          }
+        });
+
+        if (!dropped) {
+          // If never over a slot, reset position - flexbox handles layout
+          dragState.el.style.position = '';
+          dragState.el.style.left = '';
+          dragState.el.style.top = '';
+          dragState.el.style.width = '';
+          dragState.el.style.height = '';
+          dragState.el.style.animation = `float ${2 + Math.random()}s ease-in-out infinite`;
+        }
+
+        document.querySelectorAll('.ss-slot').forEach(s => s.classList.remove('hover'));
+        dragState = null;
+      }
+
+      // Add global listeners once — not per round
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+
+      startRound();
+    })();
+  </script>
+</body>
+</html>

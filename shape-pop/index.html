@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Shape Pop — Otis Games</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23B5D8EB'/></svg>">
+  <style>
+    .shape-pop { width: 100%; height: 100dvh; display: flex; flex-direction: column; background: linear-gradient(180deg, #F5F0EB 0%, #E8F4F8 100%); position: relative; overflow: hidden; padding-top: var(--header-h); }
+
+    .sp-back-link {
+      font-size: 1.3rem; text-decoration: none; color: var(--text);
+      padding: 8px 18px; border-radius: 12px;
+      background: rgba(255,255,255,0.9); box-shadow: 0 2px 8px var(--shadow);
+      font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+      transition: var(--transition);
+    }
+    .sp-back-link:active { transform: scale(0.92); }
+
+    .sp-title-group { text-align: center; padding: 20px 12px 0; }
+    .sp-title { font-size: clamp(2.2rem, 7vw, 3.5rem) !important; font-weight: 800; color: var(--sky); margin-bottom: 2px; }
+
+    .sp-prompt {
+      text-align: center; padding: 0; margin: 0 0 4px;
+      font-size: clamp(1rem, 3vw, 1.3rem); font-weight: 600;
+      color: var(--text); opacity: 0.65; z-index: 10; min-height: 1.8rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .sp-area {
+      flex: 1; position: relative; overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 16px;
+      padding: 16px;
+      justify-content: center;
+      align-content: center;
+    }
+
+    .sp-shape {
+      width: 100%; height: 100%; min-width: 64px; min-height: 64px; max-width: 80px; max-height: 80px;
+      cursor: pointer; touch-action: manipulation; z-index: 5;
+      transition: transform 0.15s;
+      animation: float 3s ease-in-out infinite;
+      margin: 0 auto; /* Center in grid cell */
+    }
+    .sp-shape:active { transform: scale(1.1); }
+    .sp-shape.popped { transform: scale(0); opacity: 0; transition: 0.2s; pointer-events: none; }
+    .sp-shape.wrong { animation: wobble 0.3s ease; }
+
+    .sp-score {
+      position: absolute; bottom: 28px; left: 0; right: 0;
+      text-align: center; font-size: 0.85rem; opacity: 0.5; z-index: 10;
+    }
+    .sp-hint {
+      position: absolute; bottom: 36px; left: 0; right: 0;
+      text-align: center; font-size: 0.85rem; color: var(--coral);
+      opacity: 0; transition: 0.3s; z-index: 10;
+    }
+    .sp-hint.visible { opacity: 1; }
+
+    @media (max-width: 480px) {
+      .sp-area {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 12px;
+        padding: 12px;
+      }
+      .sp-shape { min-width: 56px; min-height: 56px; max-width: 70px; max-height: 70px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shape-pop">
+    <div class="game-header">
+      <a href="../index.html" class="sp-back-link">← Back</a>
+    </div>
+    <div class="sp-title-group">
+      <div class="sp-title">Shape Pop</div>
+      <p class="sp-prompt" id="spPrompt">Find the shape and tap it to pop!</p>
+    </div>
+    <div class="sp-area" id="spArea"></div>
+    <div class="sp-hint" id="spHint">Tap the shape that matches!</div>
+    <div class="sp-score" id="spScore">Round 1 / 10</div>
+    <div class="game-footer"><span>© Otis Games by Cadence-X.com</span></div>
+  </div>
+
+  <script src="../scripts/shared.js"></script>
+  <script>
+    (function() {
+      const SHAPES = [
+        { id: 'circle', svg: '<circle cx="32" cy="32" r="28"/>' },
+        { id: 'square', svg: '<rect x="6" y="6" width="52" height="52" rx="4"/>' },
+        { id: 'triangle', svg: '<polygon points="32,4 60,56 4,56"/>' },
+        { id: 'star', svg: '<polygon points="32,4 40,22 60,24 44,38 48,58 32,48 16,58 20,38 4,24 24,22"/>' },
+        { id: 'diamond', svg: '<polygon points="32,4 56,32 32,60 8,32"/>' }
+      ];
+      const COLORS = [
+        { name: 'red', hex: '#FF3333' },
+        { name: 'blue', hex: '#3388FF' },
+        { name: 'yellow', hex: '#FFD700' },
+        { name: 'green', hex: '#33CC33' },
+        { name: 'purple', hex: '#9933FF' }
+      ];
+
+      const TOTAL_ROUNDS = 10;
+      let round = 0;
+      let canPlay = true;
+      let currentTarget = null;
+      let activeShapes = [];
+
+      const promptEl = document.getElementById('spPrompt');
+      const areaEl = document.getElementById('spArea');
+      const scoreEl = document.getElementById('spScore');
+      const hintEl = document.getElementById('spHint');
+
+      function createShapeElement(shape, color) {
+        const el = document.createElement('div');
+        el.className = 'sp-shape';
+        el.dataset.shapeId = shape.id;
+        el.dataset.color = color.hex;
+        el.style.animationDelay = `${Math.random() * 2}s`;
+        el.innerHTML = `<svg viewBox="0 0 64 64" width="100%" height="100%" fill="${color.hex}">${shape.svg}</svg>`;
+        return el;
+      }
+
+      function loadRound() {
+        if (round >= TOTAL_ROUNDS) {
+          createCelebration(document.body, 'You popped them all!', '💥', () => {
+            round = 0; loadRound();
+          });
+          scoreEl.textContent = 'All done! 🎉';
+          return;
+        }
+
+        canPlay = true;
+        areaEl.innerHTML = '';
+        activeShapes = [];
+        hintEl.classList.remove('visible');
+        scoreEl.textContent = `Round ${round + 1} / ${TOTAL_ROUNDS}`;
+
+        // Pick target shape and a random color
+        const targetShape = getRandomItem(SHAPES);
+        const targetColor = getRandomItem(COLORS);
+        currentTarget = { ...targetShape, color: targetColor };
+
+        // Place 6-8 shapes on screen — target shape appears EXACTLY ONCE
+        const count = 6 + Math.floor(Math.random() * 3);
+        const otherShapes = SHAPES.filter(s => s.id !== targetShape.id);
+        const shapes = [];
+        // Add the target exactly once
+        shapes.push({ shape: targetShape, color: targetColor, isTarget: true });
+        // Fill the rest with non-target shapes (different shape IDs)
+        for (let i = 1; i < count; i++) {
+          const shape = getRandomItem(otherShapes);
+          const color = getRandomItem(COLORS);
+          shapes.push({ shape, color, isTarget: false });
+        }
+
+        const shuffled = shuffleArray(shapes);
+        shuffled.forEach(({ shape, color, isTarget }) => {
+          const el = createShapeElement(shape, color);
+          el.dataset.isTarget = isTarget ? 'true' : 'false';
+          el.addEventListener('click', () => handlePop(el, isTarget));
+          areaEl.appendChild(el);
+          activeShapes.push(el);
+        });
+
+        // Set prompt — rounds 6+ include color
+        if (round + 1 <= 5) {
+          promptEl.textContent = `Find the ${targetShape.id} and tap it to pop!`;
+        } else {
+          promptEl.textContent = `Find the ${targetColor.name} ${targetShape.id} and tap it to pop!`;
+        }
+        OtisSpeech.speak(promptEl.textContent);
+      }
+
+      function handlePop(el, isTarget) {
+        if (!canPlay) return;
+        if (isTarget) {
+          canPlay = false;
+          el.classList.add('popped');
+          const rect = el.getBoundingClientRect();
+          OtisAudio.playPop();
+          OtisParticles.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, '#FFD700', 20);
+          // Remove all other shapes with animation
+          activeShapes.forEach(s => {
+            if (s !== el) s.style.transition = 'opacity 0.3s, transform 0.3s';
+            if (s !== el) s.style.opacity = '0.3';
+          });
+          round++;
+          setTimeout(loadRound, 800);
+        } else {
+          el.classList.add('wrong');
+          OtisAudio.playWobble();
+          hintEl.classList.add('visible');
+          setTimeout(() => {
+            el.classList.remove('wrong');
+            hintEl.classList.remove('visible');
+          }, 400);
+        }
+      }
+
+      loadRound();
+    })();
+  </script>
+</body>
+</html>

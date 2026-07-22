@@ -1,0 +1,14 @@
+# Claude settings
+.claude/settings.local.json
+.claude/settings.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+.superpowers/
+andrej-karpathy-skills/
+docs/
+mockups/

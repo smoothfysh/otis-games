@@ -1,0 +1,161 @@
+/* kidsgames/styles/main.css — Otis Games Shared Styles */
+
+/* === CSS Reset === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #F5F0EB;
+  color: #2D3436;
+  touch-action: manipulation;
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* === CSS Custom Properties === */
+:root {
+  --bg: #F5F0EB;
+  --pink: #FFB5C2;
+  --mint: #B5EAD7;
+  --lavender: #C9B1FF;
+  --peach: #FFDAB9;
+  --sky: #B5D8EB;
+  --coral: #FF7B89;
+  --teal: #7BC8A4;
+  --violet: #9B7ED8;
+  --gold: #FFD700;
+  --text: #2D3436;
+  --shadow: rgba(45, 52, 54, 0.1);
+  --font-display: 'Segoe UI', system-ui, sans-serif;
+  --tap-min: 60px;
+  --radius: 16px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --header-h: 52px;
+}
+
+/* === Typography === */
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.2rem, 3vw, 1.8rem); }
+
+/* === Utility === */
+.screen-reader-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* === Buttons (reusable) === */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: var(--tap-min); min-height: var(--tap-min);
+  padding: 12px 24px; border: none; border-radius: var(--radius);
+  font-size: 1.1rem; font-weight: 600; cursor: pointer;
+  transition: var(--transition); touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active { transform: scale(0.92); }
+
+/* Portal cards — used on homepage */
+.portal-card {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 8px;
+  min-width: 120px; min-height: 120px; padding: 20px;
+  border-radius: 24px; cursor: pointer; text-decoration: none;
+  color: var(--text); font-weight: 600; font-size: 1rem;
+  transition: var(--transition); touch-action: manipulation;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+.portal-card:active { transform: scale(0.92); }
+
+/* === Animations === */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+@keyframes sparkle {
+  0% { opacity: 1; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
+  100% { opacity: 0; transform: scale(2) rotate(360deg); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(255, 215, 0, 0.7); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.05); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes confettiFall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100px) rotate(720deg); }
+}
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-bounce { animation: bounce 0.5s ease; }
+.animate-fade { animation: fadeIn 0.5s ease; }
+
+/* === Game common layout === */
+.game-wrapper {
+  width: 100%; height: 100dvh;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 16px;
+  position: relative; overflow: hidden;
+}
+.game-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; z-index: 10;
+}
+.game-header .brand-link {
+  font-size: 0.85rem; font-weight: 600; text-decoration: none;
+  color: var(--text); opacity: 0.7; transition: var(--transition);
+}
+.game-header .brand-link:hover { opacity: 1; }
+.game-header .back-link {
+  font-size: 1.5rem; text-decoration: none; color: var(--text);
+  opacity: 0.6; transition: var(--transition);
+}
+.game-header .back-link:hover { opacity: 1; }
+
+/* Game footer — shared across games */
+.game-footer {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  text-align: center; padding: 6px 16px; z-index: 10;
+  pointer-events: none;
+}
+.game-footer span {
+  font-size: 0.65rem; opacity: 0.35; color: var(--text);
+  letter-spacing: 0.3px;
+}
+
+/* === Celebration overlay === */
+.celebration {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.2); animation: fadeIn 0.3s ease;
+}
+.celebration-card {
+  background: white; border-radius: 32px; padding: 40px;
+  text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  animation: slideUp 0.4s ease;
+}
+.celebration-card h2 { color: var(--gold); margin-bottom: 12px; }
+.celebration-card .star {
+  font-size: 3rem; display: inline-block;
+  animation: bounce 0.6s ease infinite;
+}
