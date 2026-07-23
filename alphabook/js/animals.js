@@ -46,7 +46,7 @@ function getAnimalEmoji(str) {
 }
 
 function getAnimalName(str) {
-  return str.replace(/\p{Extended_Pictographic}/gu, '').trim();
+  return str.replace(/[^\p{L}\p{N}\s'-]/gu, '').trim();
 }
 
 function getAnimalImageHtml(letter, name, emoji) {
