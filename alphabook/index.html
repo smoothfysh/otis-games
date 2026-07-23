@@ -296,13 +296,13 @@
         </div>
       </div>
       <div class="ab-home-buttons">
+        <button class="ab-home-btn game-btn" onclick="startGame()">
+          <span class="ab-btn-icon">🎯</span>
+          Start Game
+        </button>
         <button class="ab-home-btn book-btn" onclick="showView('book')">
           <span class="ab-btn-icon">📖</span>
           Sticker Book
-        </button>
-        <button class="ab-home-btn game-btn" onclick="startGame()">
-          <span class="ab-btn-icon">🎯</span>
-          Match Game
         </button>
       </div>
     </div>
@@ -647,11 +647,28 @@
       try { OtisAudio.playFanfare(); } catch(e) {}
       document.getElementById('gameMessage').textContent = '🎉 Round complete!';
       setTimeout(() => {
-        try {
-          createCelebration(document.getElementById('app'), 'Great job! 5 new stickers!', '🎉', () => {
-            showView('home');
-          });
-        } catch(e) {}
+        const overlay = document.createElement('div');
+        overlay.className = 'celebration';
+        overlay.style.cssText = 'z-index:100;background:rgba(0,0,0,0.3);';
+        overlay.innerHTML = `
+          <div class="celebration-card" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div class="star" style="font-size:3rem;animation:bounce 0.6s ease infinite;">🎉</div>
+            <h2 style="color:var(--gold);margin:0;">Great job! 5 new stickers!</h2>
+            <div style="display:flex;gap:12px;margin-top:8px;">
+              <button class="btn" style="background:var(--coral);color:white;min-width:120px;" id="celebPlayAgain">Play Again</button>
+              <button class="btn" style="background:var(--lavender);color:var(--text);min-width:120px;" id="celebQuit">Quit</button>
+            </div>
+          </div>
+        `;
+        document.getElementById('app').appendChild(overlay);
+        document.getElementById('celebPlayAgain').addEventListener('click', () => {
+          overlay.remove();
+          startGame();
+        });
+        document.getElementById('celebQuit').addEventListener('click', () => {
+          overlay.remove();
+          showView('home');
+        });
       }, 400);
     }
 

@@ -43,6 +43,13 @@
       font-size: clamp(0.9rem, 2.5vw, 1.2rem);
       color: var(--text); opacity: 0.6; margin-top: 4px;
     }
+    .title-section .logo-link { display: inline-block; margin-top: 12px; }
+    .title-section .title-logo {
+      height: clamp(28px, 4vw, 40px);
+      opacity: 0.7; transition: opacity 0.2s;
+      vertical-align: middle;
+    }
+    .title-section .title-logo:hover { opacity: 1; }
 
     /* Portal grid */
     .portal-grid {
@@ -108,7 +115,10 @@
     <div class="home-content">
       <div class="title-section">
         <h1>Otis Games</h1>
-        <div class="subtitle">by Cadence-X.com</div>
+        <div class="subtitle">Developed by Cadence-X</div>
+        <a href="https://www.cadence-x.com" target="_blank" class="logo-link">
+          <img src="assets/logo_font-Norwester-Lazydog_TransBG.png" alt="Cadence-X" class="title-logo">
+        </a>
       </div>
 
       <div class="portal-grid">
