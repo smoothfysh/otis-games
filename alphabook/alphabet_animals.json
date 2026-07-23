@@ -1,0 +1,1134 @@
+{
+    "A": [
+        {
+            "name": "Alligator",
+            "type": "Reptile",
+            "native_to": "United States and China",
+            "size": "Length: 10 to 15 feet (3 to 4.5 meters); Weight: 450 to 1,000 pounds (200 to 450 kg)",
+            "diet": "Carnivore",
+            "favorite_food": "Fish and small animals living near the water",
+            "fun_fact": "An alligator's powerful jaws can snap shut with incredible strength, but the muscles that open their mouth are quite weak—a human can easily hold an alligator's mouth closed with their hands!"
+        },
+        {
+            "name": "Ant",
+            "type": "Insect",
+            "native_to": "Found all over the world (except Antarctica)",
+            "size": "Length: 0.08 to 1 inch (2 to 25 mm); Weight: A tiny fraction of an ounce",
+            "diet": "Omnivore",
+            "favorite_food": "Sweet things like sugar and nectar",
+            "fun_fact": "Ants are true powerhouses; they can lift objects that weigh up to 50 times their own body weight!"
+        },
+        {
+            "name": "Antelope",
+            "type": "Mammal",
+            "native_to": "Africa and Asia",
+            "size": "Height: 1 to 6 feet tall at the shoulder; Weight: 15 to 2,000 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh grass, leaves, and tender shoots",
+            "fun_fact": "Unlike deer that shed their antlers every year, antelopes have permanent horns made of bone covered in a sheath of keratin."
+        },
+        {
+            "name": "Ape",
+            "type": "Mammal (Primate)",
+            "native_to": "Africa and Asia",
+            "size": "Height: 2.5 to 5.5 feet tall; Weight: 30 to 400 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Ripe tropical fruits like bananas and figs",
+            "fun_fact": "Apes are very smart and are our closest animal relatives. Unlike monkeys, apes do not have tails at all!"
+        },
+        {
+            "name": "Armadillo",
+            "type": "Mammal",
+            "native_to": "North, Central, and South America",
+            "size": "Length: 6 inches to 5 feet; Weight: 3 to 120 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Crunchy beetles, ants, and termites",
+            "fun_fact": "Armadillos have built-in armor made of bony plates covered in tough skin. When frightened, some species can roll up into a completely sealed, hard ball!"
+        }
+    ],
+    "B": [
+        {
+            "name": "Bear",
+            "type": "Mammal",
+            "native_to": "North America, South America, Europe, and Asia",
+            "size": "Height: 3 to 5 feet tall on all fours (up to 8+ feet standing); Weight: 200 to 1,500 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Berries, fish, and honey",
+            "fun_fact": "Bears are famous for hibernating—sleeping through the freezing winter months inside a cozy den without eating or drinking!"
+        },
+        {
+            "name": "Bat",
+            "type": "Mammal",
+            "native_to": "Found worldwide on every continent except Antarctica",
+            "size": "Wingspan: Ranges from 6 inches to 6 feet; Weight: As light as a penny up to 3 pounds",
+            "diet": "Varies by species",
+            "favorite_food": "Juicy flying insects like mosquitoes and moths",
+            "fun_fact": "Bats are the only mammals in the world that can truly fly. They use a special superpower called 'echolocation' to navigate in total darkness."
+        },
+        {
+            "name": "Bee",
+            "type": "Insect",
+            "native_to": "Every continent except Antarctica",
+            "size": "Length: 0.08 to 1.5 inches; Weight: Tiny fractions of an ounce",
+            "diet": "Herbivore",
+            "favorite_food": "Sweet flower nectar and pollen",
+            "fun_fact": "Bees do a little wiggle dance to tell other bees in the hive exactly where to find the best flowers filled with pollen."
+        },
+        {
+            "name": "Butterfly",
+            "type": "Insect",
+            "native_to": "Worldwide",
+            "wingspan": "0.5 inches to 11 inches",
+            "diet": "Herbivore (liquid diet)",
+            "favorite_food": "Sweet nectar from colorful flowers",
+            "fun_fact": "Butterflies taste things using special sensors located on their feet! They start life as crawling caterpillars before transforming inside a chrysalis."
+        },
+        {
+            "name": "Beaver",
+            "type": "Mammal",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 2.5 to 3.5 feet (plus a 1-foot flat tail); Weight: 24 to 60 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "The soft inner bark of willow and aspen trees",
+            "fun_fact": "Beavers are nature's engineers. They use their strong, bright orange front teeth to chop down trees and build complex wooden dams and lodges in rivers."
+        },
+        {
+            "name": "Buffalo",
+            "type": "Mammal",
+            "native_to": "Asia and Africa",
+            "size": "Height: 4.5 to 6 feet tall at the shoulder; Weight: 1,000 to 2,600 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tall grass and marsh plants",
+            "fun_fact": "Buffalo love to roll around in thick mud. The mud acts like a natural sunscreen and keeps pesky bugs away from their skin."
+        }
+    ],
+    "C": [
+        {
+            "name": "Cat",
+            "type": "Mammal",
+            "native_to": "Worldwide (domesticated)",
+            "size": "Length: About 1.5 feet (plus a 1-foot tail); Weight: 8 to 10 pounds on average",
+            "diet": "Carnivore",
+            "favorite_food": "Meat-based fish or poultry flavored cat food",
+            "fun_fact": "Cats spend nearly 70% of their lives sleeping and have a special collarbone structure that lets them always land safely on their feet when they fall."
+        },
+        {
+            "name": "Cow",
+            "type": "Mammal",
+            "native_to": "Worldwide (domesticated)",
+            "size": "Height: 4 to 5 feet tall at the shoulder; Weight: 1,200 to 1,500 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Lush, green grass and hay",
+            "fun_fact": "Cows have four stomach compartments to help them break down tough grass, and they actually have best friends and get stressed if they are separated from them!"
+        },
+        {
+            "name": "Cheetah",
+            "type": "Mammal",
+            "native_to": "Africa (and a tiny population in Iran)",
+            "size": "Length: 3.5 to 4.5 feet (plus a 2.5-foot tail); Weight: 75 to 140 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Fast-running antelopes like gazelles",
+            "fun_fact": "Cheetahs are the fastest land animals on Earth! They can accelerate from 0 to 60 miles per hour in just three seconds."
+        },
+        {
+            "name": "Camel",
+            "type": "Mammal",
+            "native_to": "Deserts of North Africa, the Middle East, and Central Asia",
+            "size": "Height: 6 to 7 feet tall at the shoulder; Weight: 900 to 1,400 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tough, thorny desert plants that other animals won't touch",
+            "fun_fact": "Those famous humps on a camel's back do not store water—they store fat, which helps the camel survive for long periods when food is hard to find."
+        },
+        {
+            "name": "Crab",
+            "type": "Crustacean",
+            "native_to": "Oceans, beaches, and freshwater areas worldwide",
+            "size": "Width: Ranges from a tiny pea crab to the Japanese spider crab (up to 12 feet claw-to-claw)",
+            "diet": "Omnivore",
+            "favorite_food": "Algae, worms, and small sea creatures",
+            "fun_fact": "Crabs walk and run sideways because of the shape of their jointed legs!"
+        },
+        {
+            "name": "Caterpillar",
+            "type": "Insect",
+            "native_to": "Worldwide in gardens, forests, and fields",
+            "size": "Length: 1 to 2 inches for most common species",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh, green leaves",
+            "fun_fact": "Caterpillars are eating machines—they can multiply their body weight thousands of times over in just a few weeks."
+        }
+    ],
+    "D": [
+        {
+            "name": "Dog",
+            "type": "Mammal",
+            "native_to": "Worldwide (domesticated)",
+            "size": "Height: 6 inches to 3 feet tall; Weight: 3 to 200 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Meaty treats and dog kibble",
+            "fun_fact": "A dog's sense of smell is up to 100,000 times more sensitive than a human's!"
+        },
+        {
+            "name": "Dolphin",
+            "type": "Mammal (Marine mammal)",
+            "native_to": "Oceans and some rivers worldwide",
+            "size": "Length: 6 to 13 feet long; Weight: 300 to 1,100 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Schooling fish like herring and mackerel, plus squid",
+            "fun_fact": "Dolphins are exceptionally intelligent and sleep with only one half of their brain awake at a time so they can keep swimming and breathing air!"
+        },
+        {
+            "name": "Duck",
+            "type": "Bird",
+            "native_to": "Wetlands, lakes, and rivers worldwide",
+            "size": "Length: 1 to 2 feet; Weight: 2 to 3 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Aquatic plants, small bugs, and seeds",
+            "fun_fact": "Ducks have completely waterproof feathers! A special gland near their tail produces oil that they rub all over their feathers."
+        },
+        {
+            "name": "Donkey",
+            "type": "Mammal",
+            "native_to": "Originally from the desert edges of Northeast Africa",
+            "size": "Height: 3 to 4.5 feet tall at the shoulder; Weight: 400 to 500 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tough grasses, weeds, and straw",
+            "fun_fact": "Donkeys have a reputation for being stubborn, but they are actually just very cautious thinkers."
+        },
+        {
+            "name": "Deer",
+            "type": "Mammal",
+            "native_to": "North America, South America, Europe, and Asia",
+            "size": "Height: 2 to 4 feet tall at the shoulder; Weight: 50 to 300 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Leaves, twigs, berries, and tender grass shoots",
+            "fun_fact": "Male deer grow magnificent antlers every single year, which fall off in the winter and grow back even bigger!"
+        },
+        {
+            "name": "Dragonfly",
+            "type": "Insect",
+            "native_to": "Near ponds, streams, and wetlands worldwide",
+            "size": "Wingspan: 2 to 5 inches long",
+            "diet": "Carnivore",
+            "favorite_food": "Flying mosquitoes, midges, and small bugs",
+            "fun_fact": "Dragonflies are master aerial acrobats. They can fly forward, backward, hover like a helicopter, and catch their bug prey mid-air."
+        }
+    ],
+    "E": [
+        {
+            "name": "Elephant",
+            "type": "Mammal",
+            "native_to": "Sub-Saharan Africa and tropical Asia",
+            "size": "Height: 8 to 13 feet tall at the shoulder; Weight: 5,000 to 14,000 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Grasses, tree bark, roots, and sweet fruits",
+            "fun_fact": "An elephant's trunk is an incredible multi-tool made of over 40,000 muscles!"
+        },
+        {
+            "name": "Eagle",
+            "type": "Bird",
+            "native_to": "North America, Europe, Asia, and Africa",
+            "size": "Wingspan: 6 to 8 feet wide; Weight: 6 to 14 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Fresh fish and small mammals",
+            "fun_fact": "Eagles have super-powered eyesight that is about 4 to 8 times sharper than a human's."
+        },
+        {
+            "name": "Eel",
+            "type": "Fish",
+            "native_to": "Both freshwaters and salt oceans worldwide",
+            "size": "Length: 4 inches to 8 feet long; Weight: A few ounces up to 50 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Small fish, crabs, and worms",
+            "fun_fact": "Eels look a lot like slippery underwater snakes, but they are true fish with hidden fins and gills!"
+        },
+        {
+            "name": "Emu",
+            "type": "Bird",
+            "native_to": "Australia",
+            "size": "Height: 5 to 6 feet tall; Weight: 70 to 100 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Grass seeds, fruits, and crunchy insects",
+            "fun_fact": "Emus have long, powerful legs that allow them to run as fast as a car driving on a neighborhood street (up to 30 mph)!"
+        },
+        {
+            "name": "Elk",
+            "type": "Mammal",
+            "native_to": "North America and Central/East Asia",
+            "size": "Height: 4.5 to 5 feet tall at the shoulder; Weight: 500 to 700 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Woody shrubs, tree bark, and grasses",
+            "fun_fact": "Male elk make a loud, echoing sound called a 'bugle' to show off during the autumn mating season."
+        }
+    ],
+    "F": [
+        {
+            "name": "Fox",
+            "type": "Mammal",
+            "native_to": "North America, Europe, Asia, and parts of Africa",
+            "size": "Length: 1.5 to 3 feet long (plus a bushy 1-foot tail); Weight: 10 to 30 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Mice, rabbits, berries, and insects",
+            "fun_fact": "Foxes use their long, bushy tails as warm blankets wrapped around their noses and feet when they sleep in the snow."
+        },
+        {
+            "name": "Frog",
+            "type": "Amphibian",
+            "native_to": "Worldwide on every continent except Antarctica",
+            "size": "Length: 0.3 inches up to 12 inches; Weight: Fraction of an ounce up to 7 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Flies, beetles, and crickets caught with a sticky tongue",
+            "fun_fact": "Frogs never need to drink water through their mouths—they absorb moisture straight through their damp skin!"
+        },
+        {
+            "name": "Flamingo",
+            "type": "Bird",
+            "native_to": "Africa, South America, Central America, and Southern Europe/Asia",
+            "size": "Height: 3.5 to 4.5 feet tall; Weight: 4 to 8 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Tiny pink shrimp and algae",
+            "fun_fact": "Flamingos are born with gray-white feathers! They turn bright pink because of the pigments in the shrimp and algae they eat."
+        },
+        {
+            "name": "Fish",
+            "type": "Fish",
+            "native_to": "Oceans, lakes, rivers, and ponds worldwide",
+            "size": "Varies from tiny dwarf gobies to massive whale sharks",
+            "diet": "Varies by species",
+            "favorite_food": "Plankton, algae, or tiny water bugs",
+            "fun_fact": "Fish 'breathe' underwater by pulling oxygen out of the water using their gills."
+        },
+        {
+            "name": "Ferret",
+            "type": "Mammal",
+            "native_to": "Worldwide (domesticated pet)",
+            "size": "Length: 1.5 feet long; Weight: 1.5 to 4 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "High-protein meat diets",
+            "fun_fact": "Ferrets snooze for up to 18 hours a day, and love to do a funny 'war dance' when they wake up!"
+        },
+        {
+            "name": "Falcon",
+            "type": "Bird",
+            "native_to": "Worldwide except Antarctica",
+            "size": "Wingspan: 2 to 4 feet; Weight: 1.5 to 3 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Smaller birds caught mid-air",
+            "fun_fact": "The Peregrine Falcon is the fastest animal on Earth when it dives, reaching speeds of over 200 mph!"
+        }
+    ],
+    "G": [
+        {
+            "name": "Giraffe",
+            "type": "Mammal",
+            "native_to": "Savannahs and grasslands of Africa",
+            "size": "Height: 14 to 19 feet tall; Weight: 1,800 to 2,800 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tender leaves at the top of acacia trees",
+            "fun_fact": "Giraffes are the tallest land animals. Even with extremely long necks, they have the exact same number of neck bones as humans (seven!)."
+        },
+        {
+            "name": "Gorilla",
+            "type": "Mammal (Primate)",
+            "native_to": "Central African forests",
+            "size": "Height: 4.5 to 6 feet tall; Weight: 300 to 500 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Wild celery, juicy fruits, and shoots",
+            "fun_fact": "Gorillas share about 98% of their DNA with humans and build fresh nests out of leafy branches every night."
+        },
+        {
+            "name": "Goat",
+            "type": "Mammal",
+            "native_to": "Mountains and rocky hills of Asia and Europe (now global)",
+            "size": "Height: 2 to 3 feet tall at the shoulder; Weight: 45 to 200 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Grasses, weeds, and woody brush",
+            "fun_fact": "Goats have rectangular pupils, giving them an incredible wide field of vision around 320 degrees!"
+        },
+        {
+            "name": "Goldfish",
+            "type": "Fish",
+            "native_to": "Originally East Asia (China)",
+            "size": "Length: 2 to 6 inches; Weight: A few ounces",
+            "diet": "Omnivore",
+            "favorite_food": "Flaked fish food and tiny water bugs",
+            "fun_fact": "Goldfish can remember things, shapes, and colors for months, not just three seconds!"
+        },
+        {
+            "name": "Grasshopper",
+            "type": "Insect",
+            "native_to": "Grassy fields and meadows worldwide",
+            "size": "Length: 1 to 3 inches long; Weight: Tiny fraction of an ounce",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh blades of grass, leaves, and crops",
+            "fun_fact": "Grasshoppers can leap distances up to 20 times the length of their own body in a single bound!"
+        },
+        {
+            "name": "Guinea Pig",
+            "type": "Mammal (Rodent)",
+            "native_to": "South America (Andes region)",
+            "size": "Length: 8 to 10 inches; Weight: 1.5 to 2.5 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh timothy hay, leafy greens, and crunchy carrots",
+            "fun_fact": "Guinea pigs express happiness by doing a little hop in the air called 'popcorning'!"
+        }
+    ],
+    "H": [
+        {
+            "name": "Hippo",
+            "type": "Mammal",
+            "native_to": "Rivers and lakes of Sub-Saharan Africa",
+            "size": "Height: 4.5 to 5 feet tall at the shoulder; Weight: 3,000 to 4,500 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh river grass",
+            "fun_fact": "Hippos can run faster than a human on land, and their skin secretes a red liquid acting as sunscreen and moisturizer."
+        },
+        {
+            "name": "Horse",
+            "type": "Mammal",
+            "native_to": "Grasslands of North America and Eurasia (now domesticated)",
+            "size": "Height: 4 to 6 feet tall at the shoulder; Weight: 800 to 2,000 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh pasture grass and sweet carrots",
+            "fun_fact": "Horses can sleep standing up using a special 'locking' system in their leg tendons."
+        },
+        {
+            "name": "Hedgehog",
+            "type": "Mammal",
+            "native_to": "Europe, Asia, and Africa",
+            "size": "Length: 5 to 9 inches; Weight: 1 to 2 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Crunchy beetles, caterpillars, and earthworms",
+            "fun_fact": "Covered in up to 7,000 stiff spines, hedgehogs roll up into a prickly ball of armor when frightened."
+        },
+        {
+            "name": "Hamster",
+            "type": "Mammal (Rodent)",
+            "native_to": "Dry steppes and deserts of Europe and Asia",
+            "size": "Length: 2 to 7 inches; Weight: 1 to 7 ounces",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, grains, and nuts",
+            "fun_fact": "Hamsters have giant, stretchy cheek pouches that stretch all the way back to their shoulders!"
+        },
+        {
+            "name": "Hyena",
+            "type": "Mammal",
+            "native_to": "Savannahs and deserts of Africa and Asia",
+            "size": "Height: 2.5 to 3 feet tall at the shoulder; Weight: 90 to 190 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Meat",
+            "fun_fact": "Hyenas make a vocalization sounding like human laughter when they feel excited, stressed, or nervous."
+        },
+        {
+            "name": "Hawk",
+            "type": "Bird",
+            "native_to": "Forests and open plains worldwide",
+            "size": "Wingspan: 3 to 4 feet wide; Weight: 1.5 to 3.5 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Mice, small rabbits, snakes, and frogs",
+            "fun_fact": "Hawks soar using rising warm air currents called thermals to save energy while scanning for snacks."
+        }
+    ],
+    "I": [
+        {
+            "name": "Iguana",
+            "type": "Reptile",
+            "native_to": "Central and South America, Caribbean islands",
+            "size": "Length: 4 to 6 feet long; Weight: 9 to 20 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh green leaves, flowers, and ripe fruit",
+            "fun_fact": "Iguanas are fantastic swimmers and can hold their breath underwater for up to 30 minutes!"
+        },
+        {
+            "name": "Impala",
+            "type": "Mammal",
+            "native_to": "Savannahs and woodlands of East and Southern Africa",
+            "size": "Height: 3 feet tall at the shoulder; Weight: 90 to 170 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh green grass and acacia tree leaves",
+            "fun_fact": "Igor can leap up to 10 feet high into the air and clear distances of 33 feet in a single bound!"
+        },
+        {
+            "name": "Ibis",
+            "type": "Bird",
+            "native_to": "Wetlands and marshes in warm regions worldwide",
+            "size": "Height: 2 feet tall; Weight: 2 to 3 pounds",
+            "diet": "Carnivore / Omnivore",
+            "favorite_food": "Aquatic insects, crabs, and small fish",
+            "fun_fact": "Ibises have long, curved beaks to probe deep into muddy wetland soil for hidden crabs."
+        },
+        {
+            "name": "Insect",
+            "type": "Insect",
+            "native_to": "Everywhere on Earth except deep ocean trenches",
+            "size": "Microscopic up to several inches long",
+            "diet": "Varies by species",
+            "favorite_food": "Plant sap, pollen, and decaying organic matter",
+            "fun_fact": "For every single human being on Earth, there are roughly 200 million individual insects!"
+        }
+    ],
+    "J": [
+        {
+            "name": "Jaguar",
+            "type": "Mammal",
+            "native_to": "Rainforests and swamps of Central and South America",
+            "size": "Length: 4 to 7 feet long; Weight: 100 to 250 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Wild forest animals like deer, tapirs, and fish",
+            "fun_fact": "Unlike most cats that hate water, jaguars love swimming and dive into rivers to hunt!"
+        },
+        {
+            "name": "Jellyfish",
+            "type": "Invertebrate",
+            "native_to": "Oceans worldwide",
+            "size": "Width: Half an inch up to 7 feet wide",
+            "diet": "Carnivore",
+            "favorite_food": "Tiny shrimp, fish eggs, and small floating plankton",
+            "fun_fact": "Jellyfish are ancient creatures made of over 95% water that swam in oceans before dinosaurs walked."
+        },
+        {
+            "name": "Blue Jay",
+            "type": "Bird",
+            "native_to": "Forests of eastern and central North America",
+            "size": "Length: 10 to 12 inches long; Weight: 2 to 3 ounces",
+            "diet": "Omnivore",
+            "favorite_food": "Acorns, seeds, nuts, and berries",
+            "fun_fact": "Blue jays can mimic the screeching call of a hawk to scare other birds away from food!"
+        },
+        {
+            "name": "Jackal",
+            "type": "Mammal",
+            "native_to": "Africa, parts of Europe, and Southern Asia",
+            "size": "Length: 2 to 3 feet long; Weight: 15 to 30 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Small rodents, birds, lizards, and fallen fruit",
+            "fun_fact": "Jackals mate for life and work closely together in pairs to raise their young pups."
+        }
+    ],
+    "K": [
+        {
+            "name": "Kangaroo",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Australia",
+            "size": "Height: 3 to 6 feet tall; Weight: 40 to 200 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tender grass, leaves, and shrubs",
+            "fun_fact": "Kangaroos cannot walk backward! They can only hop forward, reaching speeds up to 40 mph."
+        },
+        {
+            "name": "Koala",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Eucalyptus forests of eastern Australia",
+            "size": "Length: 2 to 2.5 feet long; Weight: 15 to 30 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Eucalyptus tree leaves (gum leaves)",
+            "fun_fact": "Koalas sleep up to 20 hours a day because eucalyptus leaves give them very little energy!"
+        },
+        {
+            "name": "Kingfisher",
+            "type": "Bird",
+            "native_to": "Rivers, lakes, and coastal areas worldwide",
+            "size": "Length: 4 to 18 inches long; Weight: 1 to 15 ounces",
+            "diet": "Carnivore",
+            "favorite_food": "Small swimming fish and water bugs",
+            "fun_fact": "Kingfishers sit quietly on branches before diving down like a bullet to snatch fish with their beaks."
+        },
+        {
+            "name": "Kiwi",
+            "type": "Bird",
+            "native_to": "New Zealand",
+            "size": "Length: 10 to 18 inches long; Weight: 3 to 7 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Earthworms, grubs, and fallen berries",
+            "fun_fact": "Kiwis are nocturnal birds with nostrils at the very tip of their beaks, giving them a powerful sense of smell."
+        }
+    ],
+    "L": [
+        {
+            "name": "Lion",
+            "type": "Mammal",
+            "native_to": "Grasslands and savannahs of Africa (and India)",
+            "size": "Length: 5 to 8 feet long; Weight: 260 to 500 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Large hoofed animals like zebras and wildebeests",
+            "fun_fact": "Lions are the only big cats that live together in family groups called prides."
+        },
+        {
+            "name": "Leopard",
+            "type": "Mammal",
+            "native_to": "Sub-Saharan Africa, Middle East, and Asia",
+            "size": "Length: 3 to 6 feet long; Weight: 60 to 160 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Deer, antelope, and monkeys",
+            "fun_fact": "Leopards drag heavy prey up tall trees to keep their food safe from lions and hyenas."
+        },
+        {
+            "name": "Llama",
+            "type": "Mammal",
+            "native_to": "Andes mountains of South America",
+            "size": "Height: 4 feet tall at the shoulder; Weight: 280 to 450 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Mountain grasses and mountain shrubs",
+            "fun_fact": "If annoyed or threatened, llamas communicate displeasure by spitting green grass and saliva!"
+        },
+        {
+            "name": "Lemur",
+            "type": "Mammal (Primate)",
+            "native_to": "Madagascar",
+            "size": "Length: 5 inches to 3 feet; Weight: 1 ounce to 20 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Tropical fruits, leaves, flowers, and insects",
+            "fun_fact": "Lemurs love to sit facing the morning sun with arms spread wide like they are sunbathing."
+        },
+        {
+            "name": "Lobster",
+            "type": "Crustacean",
+            "native_to": "Cold rocky oceans worldwide",
+            "size": "Length: 8 to 20 inches long; Weight: 1 to 4 pounds",
+            "diet": "Carnivore / Scavenger",
+            "favorite_food": "Crabs, clams, snails, and decaying sea matter",
+            "fun_fact": "Lobsters communicate underwater by releasing streams of water with chemical signals from glands near their eyes!"
+        },
+        {
+            "name": "Ladybug",
+            "type": "Insect",
+            "native_to": "Gardens, fields, and forests worldwide",
+            "size": "Length: 0.3 inches long; Weight: Tiny fraction of an ounce",
+            "diet": "Carnivore / Omnivore",
+            "favorite_food": "Tiny garden pests called aphids",
+            "fun_fact": "Those bright red shells with black spots act as a warning sign to birds saying 'I taste terrible!'"
+        }
+    ],
+    "M": [
+        {
+            "name": "Monkey",
+            "type": "Mammal (Primate)",
+            "native_to": "Americas, Africa, and Asia",
+            "size": "Length: 6 inches to 3 feet long; Weight: 4 ounces to 80 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Ripe fruits, nuts, leaves, and insects",
+            "fun_fact": "Many South American monkeys have a prehensile tail acting like an extra fifth hand to hang upside down!"
+        },
+        {
+            "name": "Mouse",
+            "type": "Mammal (Rodent)",
+            "native_to": "Worldwide near human settlements and fields",
+            "size": "Length: 2 to 4 inches long; Weight: Less than 1 ounce",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, grains, and sweet fruits",
+            "fun_fact": "Mice have teeth that never stop growing, so they constantly chew on things to keep them trimmed."
+        },
+        {
+            "name": "Meerkat",
+            "type": "Mammal",
+            "native_to": "Deserts and dry grasslands of Southern Africa",
+            "size": "Length: 10 to 14 inches long; Weight: 1.5 to 2.5 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Beetles, spiders, scorpions, and lizards",
+            "fun_fact": "While the group hunts, one meerkat acts as a dedicated lookout, standing straight up on its hind legs."
+        },
+        {
+            "name": "Moose",
+            "type": "Mammal",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Height: 5 to 7 feet tall at the shoulder; Weight: 800 to 1,500 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Woody twigs, shrubs, and underwater aquatic plants",
+            "fun_fact": "Moose can dive up to 15 feet underwater into lakes to munch on delicious aquatic plants."
+        },
+        {
+            "name": "Mole",
+            "type": "Mammal",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 4 to 7 inches long; Weight: 2 to 5 ounces",
+            "diet": "Carnivore",
+            "favorite_food": "Earthworms, grubs, and underground bugs",
+            "fun_fact": "Moles are built like little bulldozers with massive, spade-like front paws for digging underground tunnels."
+        }
+    ],
+    "N": [
+        {
+            "name": "Newt",
+            "type": "Amphibian",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 3 to 7 inches long; Weight: Fraction of an ounce",
+            "diet": "Carnivore",
+            "favorite_food": "Small water insects, worms, and tiny snails",
+            "fun_fact": "If a newt loses a toe or a leg, its body can completely regenerate and grow a brand-new body part!"
+        },
+        {
+            "name": "Narwhal",
+            "type": "Mammal (Arctic whale)",
+            "native_to": "Icy Arctic waters around Greenland, Canada, and Russia",
+            "size": "Length: 13 to 20 feet long; Weight: 1,800 to 3,500 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Arctic cod, shrimp, and squid",
+            "fun_fact": "Called 'unicorns of the sea', male narwhals feature a long, spiral tusk which is an overgrown front tooth!"
+        },
+        {
+            "name": "Nightingale",
+            "type": "Bird",
+            "native_to": "Europe and Western Asia",
+            "size": "Length: 6 inches long; Weight: Less than 1 ounce",
+            "diet": "Insectivore / Omnivore",
+            "favorite_food": "Beetles, ants, and caterpillars",
+            "fun_fact": "Nightingales are famous for singing complex, beautiful songs all through the dark night hours!"
+        },
+        {
+            "name": "Numbat",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Southwestern Australia",
+            "size": "Length: 14 to 18 inches long; Weight: 1 to 2 pounds",
+            "diet": "Insectivore",
+            "favorite_food": "Termites",
+            "fun_fact": "A single adult numbat can gobble up over 20,000 termites in a single day using its long sticky tongue!"
+        }
+    ],
+    "O": [
+        {
+            "name": "Owl",
+            "type": "Bird",
+            "native_to": "Forests, deserts, and tundras worldwide",
+            "size": "Height: 5 inches to 2.5 feet; Weight: 4 ounces to 6 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Mice, voles, and insects",
+            "fun_fact": "Owls cannot move their eyes sideways, so they must swivel their entire heads in a 270-degree circle!"
+        },
+        {
+            "name": "Octopus",
+            "type": "Invertebrate",
+            "native_to": "Oceans worldwide",
+            "size": "Length: 2 inches to 16 feet across; Weight: 1 ounce to 100 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Crabs, clams, lobsters, and small fish",
+            "fun_fact": "Octopuses have three hearts, blue blood, and no bones, letting them squeeze through coin-sized holes!"
+        },
+        {
+            "name": "Otter",
+            "type": "Mammal",
+            "native_to": "Rivers, lakes, and coastal shores worldwide",
+            "size": "Length: 2 to 4 feet long; Weight: 10 to 90 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Crabs, fish, frogs, and clams",
+            "fun_fact": "Sea otters hold hands while floating on their backs in groups (rafts) so they don't drift apart!"
+        },
+        {
+            "name": "Ostrich",
+            "type": "Bird",
+            "native_to": "Dry savannahs and deserts of Africa",
+            "size": "Height: 7 to 9 feet tall; Weight: 200 to 350 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Grasses, seeds, flowers, and insects",
+            "fun_fact": "Ostriches are the largest living birds and can run as fast as highway traffic—up to 45 mph!"
+        },
+        {
+            "name": "Orangutan",
+            "type": "Mammal (Primate)",
+            "native_to": "Rainforests of Borneo and Sumatra",
+            "size": "Height: 4 to 5 feet tall; Weight: 70 to 200 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Ripe tropical fruits like mangoes, figs, and durians",
+            "fun_fact": "Orangutan means 'person of the forest' in Malay. They spend nearly their whole lives high in trees."
+        }
+    ],
+    "P": [
+        {
+            "name": "Penguin",
+            "type": "Bird",
+            "native_to": "Southern Hemisphere",
+            "size": "Height: 16 inches to 4 feet tall; Weight: 2 to 90 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Silver fish, squid, and krill",
+            "fun_fact": "Penguins cannot fly in the air, but use their wings as flippers to 'fly' underwater at 22 mph!"
+        },
+        {
+            "name": "Panda",
+            "type": "Mammal",
+            "native_to": "Mountain bamboo forests of central China",
+            "size": "Height: 2 to 3 feet tall; Weight: 150 to 250 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh bamboo shoots, stems, and leaves",
+            "fun_fact": "Giant pandas spend up to 12 hours every single day sitting down and munching on bamboo."
+        },
+        {
+            "name": "Pig",
+            "type": "Mammal",
+            "native_to": "Forests of Europe and Asia (now farmed globally)",
+            "size": "Length: 3 to 5 feet long; Weight: 150 to 600+ pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Grains, roots, fruits, and vegetables",
+            "fun_fact": "Pigs roll in mud only to cool down and protect their skin from sunburn; they are actually very clean!"
+        },
+        {
+            "name": "Parrot",
+            "type": "Bird",
+            "native_to": "Tropical regions worldwide",
+            "size": "Length: 3 inches to 3 feet long; Weight: 1 ounce to 4 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, nuts, fruits, and flower nectar",
+            "fun_fact": "Parrots can copy human speech, doorbells, microwave beeps, and phone ringtones!"
+        },
+        {
+            "name": "Polar Bear",
+            "type": "Mammal",
+            "native_to": "Arctic circles around North America and Eurasia",
+            "size": "Height: 3.5 to 5 feet tall at shoulder; Weight: 900 to 1,600 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Ringed seals living on sea ice",
+            "fun_fact": "Polar bear fur isn't white—each hair is hollow and transparent, reflecting sunlight!"
+        },
+        {
+            "name": "Peacock",
+            "type": "Bird",
+            "native_to": "Forests and farmlands of South Asia (India)",
+            "size": "Length: 3 to 7 feet long; Weight: 8 to 13 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, grains, flower petals, insects, and small lizards",
+            "fun_fact": "Only male birds are peacocks, sporting shimmering blue-and-green tail feathers covered in eyespots."
+        }
+    ],
+    "Q": [
+        {
+            "name": "Quail",
+            "type": "Bird",
+            "native_to": "Europe, Asia, Africa, and the Americas",
+            "size": "Length: 6 to 8 inches long; Weight: 3 to 5 ounces",
+            "diet": "Omnivore",
+            "favorite_food": "Grass seeds, fallen grains, and tiny beetles",
+            "fun_fact": "Quail prefer running fast through tall grass to escape danger rather than taking flight."
+        },
+        {
+            "name": "Quokka",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Small islands off Western Australia",
+            "size": "Length: 1.5 feet long; Weight: 5 to 11 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tender leaves, grass stems, and juicy roots",
+            "fun_fact": "Quokkas are famous for their smiling faces, earning them the title of 'happiest animals in the world'!"
+        },
+        {
+            "name": "Quoll",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Australia and Papua New Guinea",
+            "size": "Length: 10 to 30 inches long; Weight: 1 to 15 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Insects, frogs, lizards, birds, and small mammals",
+            "fun_fact": "Quolls are nocturnal hunters with dark brown fur covered entirely in cute white spots."
+        }
+    ],
+    "R": [
+        {
+            "name": "Rabbit",
+            "type": "Mammal",
+            "native_to": "Europe, Americas, and Africa",
+            "size": "Length: 1 to 1.5 feet long; Weight: 2 to 5 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Fresh clover, grass, lettuce, and carrots",
+            "fun_fact": "Rabbits have incredible 360-degree vision to see what is happening behind their backs!"
+        },
+        {
+            "name": "Rhino",
+            "type": "Mammal",
+            "native_to": "Grasslands and tropical forests of Africa and Asia",
+            "size": "Height: 4 to 6 feet tall at shoulder; Weight: 1,800 to 5,000+ pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tall grass, leafy branches, and woody shoots",
+            "fun_fact": "Rhino horns are not bone, but made entirely of keratin—the exact protein in human fingernails!"
+        },
+        {
+            "name": "Raccoon",
+            "type": "Mammal",
+            "native_to": "North and Central America",
+            "size": "Length: 2 to 3 feet long; Weight: 10 to 35 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Frogs, crayfish, berries, and sweet garbage scraps",
+            "fun_fact": "Raccoons have super-sensitive front paws that feel things like human hands."
+        },
+        {
+            "name": "Rat",
+            "type": "Mammal (Rodent)",
+            "native_to": "Worldwide alongside human civilization",
+            "size": "Length: 9 to 11 inches long; Weight: 0.5 to 1.5 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, grains, fruits, and food scraps",
+            "fun_fact": "Rats groom themselves multiple times a day and can even laugh when tickled!"
+        },
+        {
+            "name": "Reindeer",
+            "type": "Mammal",
+            "native_to": "Arctic tundras and northern forests",
+            "size": "Height: 3.5 to 4.5 feet tall; Weight: 240 to 400 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Lichens ('reindeer moss') buried under snow",
+            "fun_fact": "Reindeer are the only deer species where *both* males and females grow antlers!"
+        }
+    ],
+    "S": [
+        {
+            "name": "Sloth",
+            "type": "Mammal",
+            "native_to": "Tropical rainforests of Central and South America",
+            "size": "Length: 1.5 to 2.5 feet long; Weight: 8 to 17 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tender leaves, buds, and twigs",
+            "fun_fact": "Sloths move so slowly that green algae grows on their fur, giving them natural camouflage!"
+        },
+        {
+            "name": "Shark",
+            "type": "Fish",
+            "native_to": "Oceans and seas worldwide",
+            "size": "Length: 8 inches to 40 feet long; Weight: 1 pound to 20+ tons",
+            "diet": "Carnivore",
+            "favorite_food": "Fish, squid, seals, and crabs",
+            "fun_fact": "Sharks can go through over 20,000 teeth in a lifetime as new rows constantly move forward."
+        },
+        {
+            "name": "Snake",
+            "type": "Reptile",
+            "native_to": "Worldwide except Antarctica",
+            "size": "Length: 4 inches to 25+ feet; Weight: A few ounces to 300 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Mice, frogs, birds, and eggs",
+            "fun_fact": "Snakes 'taste' the air using their flicking forked tongues to track down prey!"
+        },
+        {
+            "name": "Sheep",
+            "type": "Mammal",
+            "native_to": "Europe and Asia (now farmed globally)",
+            "size": "Height: 2 to 3 feet tall; Weight: 100 to 250 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Short pasture grasses and clover",
+            "fun_fact": "Sheep can recognize up to 50 different individual human faces and remember them for years."
+        },
+        {
+            "name": "Squirrel",
+            "type": "Mammal (Rodent)",
+            "native_to": "Americas, Europe, Asia, and Africa",
+            "size": "Length: 6 inches to 1.5 feet long; Weight: 0.5 to 2 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Acorns, nuts, seeds, and tree bark",
+            "fun_fact": "Squirrels bury thousands of nuts underground and forget where many are, which sprout into oak trees!"
+        },
+        {
+            "name": "Seal",
+            "type": "Mammal",
+            "native_to": "Cold coastal ocean waters worldwide",
+            "size": "Length: 3 to 16 feet long; Weight: 100 to 8,000 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Fish, squid, octopus, and crabs",
+            "fun_fact": "Seals are graceful underwater swimmers, but shuffle clumsily on land like furry ocean sausages!"
+        }
+    ],
+    "T": [
+        {
+            "name": "Tiger",
+            "type": "Mammal",
+            "native_to": "Jungles, grasslands, and swamps of Asia",
+            "size": "Length: 8 to 10 feet long; Weight: 200 to 650 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Wild deer, wild boar, and water buffalo",
+            "fun_fact": "Just like human fingerprints, no two tigers have the exact same stripe pattern!"
+        },
+        {
+            "name": "Turtle",
+            "type": "Reptile",
+            "native_to": "Oceans, lakes, rivers, and land habitats worldwide",
+            "size": "Length: 4 inches to 6 feet long; Weight: A few ounces to 1,500 pounds",
+            "diet": "Omnivore / Herbivore",
+            "favorite_food": "Aquatic plants, jellyfish, or small bugs",
+            "fun_fact": "A turtle's shell is fused directly to its ribcage and spine—it can never climb out of its shell!"
+        },
+        {
+            "name": "Toucan",
+            "type": "Bird",
+            "native_to": "Tropical rainforests of Central and South America",
+            "size": "Length: 1 to 2 feet long; Weight: 0.5 to 1.5 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Ripe tropical fruits, berries, insects, and small lizards",
+            "fun_fact": "A toucan's giant beak is lightweight and hollow, used like a reach-extender to grab fruits."
+        },
+        {
+            "name": "Turkey",
+            "type": "Bird",
+            "native_to": "Forests of North America",
+            "size": "Length: 3 to 4 feet long; Weight: 10 to 24 pounds",
+            "diet": "Omnivore",
+            "favorite_food": "Seeds, nuts, berries, acorns, and insects",
+            "fun_fact": "Wild turkeys can fly short distances up into trees to roost safely away from predators at night."
+        },
+        {
+            "name": "Toad",
+            "type": "Amphibian",
+            "native_to": "Gardens, fields, and forests worldwide",
+            "size": "Length: 2 to 6 inches long; Weight: 1 to 2 ounces",
+            "diet": "Carnivore",
+            "favorite_food": "Beetles, ants, moths, and earthworms",
+            "fun_fact": "Unlike slimy frogs, toads have dry, bumpy, warty skin and spend more time on dry land."
+        }
+    ],
+    "U": [
+        {
+            "name": "Sea Urchin",
+            "type": "Invertebrate",
+            "native_to": "Ocean floor rocky seabeds and coral reefs worldwide",
+            "size": "Width: 1 to 4 inches across; Weight: A few ounces",
+            "diet": "Herbivore / Omnivore",
+            "favorite_food": "Seaweed and kelp",
+            "fun_fact": "Urchins look like little pin-cushions with moving spines, hiding five tiny teeth to scrape algae off rocks!"
+        },
+        {
+            "name": "Umbrellabird",
+            "type": "Bird",
+            "native_to": "Tropical rainforests of Central and South America",
+            "size": "Length: 13 to 15 inches long; Weight: 10 to 15 ounces",
+            "diet": "Omnivore",
+            "favorite_food": "Rainforest fruits, berries, and large insects",
+            "fun_fact": "Male umbrellabirds sport a wild crest of black feathers that opens up like a tiny umbrella!"
+        },
+        {
+            "name": "Urial",
+            "type": "Mammal (Wild sheep)",
+            "native_to": "Rocky mountains and grasslands of Central and South Asia",
+            "size": "Height: 2.5 to 3 feet tall; Weight: 70 to 200 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Mountain grasses, herbs, and wild shrubs",
+            "fun_fact": "Urials have gorgeous, large spiraling horns that help males battle on steep slopes."
+        }
+    ],
+    "V": [
+        {
+            "name": "Vulture",
+            "type": "Bird",
+            "native_to": "Warm regions across North/South America, Africa, Europe, and Asia",
+            "size": "Wingspan: 5 to 9 feet wide; Weight: 3 to 30 pounds",
+            "diet": "Carnivore (Scavenger)",
+            "favorite_food": "Carrion (already-dead animals)",
+            "fun_fact": "Vultures have bald heads and strong immune systems, acting as nature's cleanup crew."
+        },
+        {
+            "name": "Viper",
+            "type": "Reptile",
+            "native_to": "Forests, deserts, and rocky hills worldwide",
+            "size": "Length: 1 to 6+ feet long; Weight: 0.5 to 10 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Mice, rats, frogs, and lizards",
+            "fun_fact": "Vipers feature long, hollow fangs that fold up inside their mouths like pocket knives until they strike!"
+        },
+        {
+            "name": "Vicuña",
+            "type": "Mammal",
+            "native_to": "High-altitude Andes plateaus in South America",
+            "size": "Height: 3 feet tall at shoulder; Weight: 75 to 150 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Low-growing short mountain grasses",
+            "fun_fact": "Vicuñas produce the rarest, softest, and most luxurious natural wool in the world!"
+        }
+    ],
+    "W": [
+        {
+            "name": "Whale",
+            "type": "Mammal (Marine mammal)",
+            "native_to": "Oceans and seas worldwide",
+            "size": "Length: 10 to 100 feet long; Weight: 1 ton up to 200 tons",
+            "diet": "Carnivore",
+            "favorite_food": "Tiny shrimp-like krill or small fish",
+            "fun_fact": "The blue whale is the largest animal to ever live on Earth—even bigger than dinosaurs!"
+        },
+        {
+            "name": "Wolf",
+            "type": "Mammal",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 3 to 5 feet long; Weight: 60 to 130 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Large hoofed animals like deer and elk",
+            "fun_fact": "Wolves live in packs and communicate across vast forest distances by howling."
+        },
+        {
+            "name": "Walrus",
+            "type": "Mammal",
+            "native_to": "Icy Arctic ocean waters",
+            "size": "Length: 7 to 11 feet long; Weight: 1,500 to 3,500 pounds",
+            "diet": "Carnivore",
+            "favorite_food": "Clams, mussels, and bottom-dwelling sea creatures",
+            "fun_fact": "Walruses use their ivory tusks like ice picks to haul their heavy bodies out of freezing water onto ice!"
+        },
+        {
+            "name": "Wombat",
+            "type": "Mammal (Marsupial)",
+            "native_to": "Australia",
+            "size": "Length: 3 feet long; Weight: 44 to 75 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tough native grasses, roots, and tree bark",
+            "fun_fact": "Wombats have backward-facing pouches so dirt doesn't get inside when digging, and cube-shaped poop!"
+        },
+        {
+            "name": "Weasel",
+            "type": "Mammal",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 6 to 12 inches long; Weight: 2 to 9 ounces",
+            "diet": "Carnivore",
+            "favorite_food": "Mice, voles, and small insects",
+            "fun_fact": "Weasels have slender bodies letting them chase mice down narrow burrows, and turn pure white in snowy winters!"
+        }
+    ],
+    "X": [
+        {
+            "name": "X-ray Tetra",
+            "type": "Fish",
+            "native_to": "Slow rivers in South America (Amazon basin)",
+            "size": "Length: 1.5 to 2 inches long; Weight: Fraction of an ounce",
+            "diet": "Omnivore",
+            "favorite_food": "Tiny water flakes, brine shrimp, and aquatic bugs",
+            "fun_fact": "These tiny fish have completely see-through skin, so you can see their backbone and beating heart!"
+        },
+        {
+            "name": "Xenops",
+            "type": "Bird",
+            "native_to": "Rainforests of Mexico, Central and South America",
+            "size": "Length: Around 4.5 inches long; Weight: Half an ounce",
+            "diet": "Insectivore",
+            "favorite_food": "Tiny beetles, insect larvae, and spiders",
+            "fun_fact": "Xenops act like tiny feathered woodpeckers, hitching themselves sideways up tree trunks for hidden bugs."
+        }
+    ],
+    "Y": [
+        {
+            "name": "Yak",
+            "type": "Mammal",
+            "native_to": "Mountains of Central Asia (Tibet)",
+            "size": "Height: 4.5 to 5.5 feet tall; Weight: 600 to 1,200 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Mountain grasses, mosses, and lichens",
+            "fun_fact": "Yaks have a shaggy double-layer coat with long hair hanging down like a skirt to survive sub-zero storms."
+        },
+        {
+            "name": "Yellowjacket",
+            "type": "Insect",
+            "native_to": "North America, Europe, and Asia",
+            "size": "Length: 0.5 inches long; Weight: Tiny fraction of an ounce",
+            "diet": "Omnivore",
+            "favorite_food": "Sweet nectar, fruit juice, and other insects",
+            "fun_fact": "Unlike honeybees that sting only once, yellowjackets have smooth stingers allowing multiple stings!"
+        }
+    ],
+    "Z": [
+        {
+            "name": "Zebra",
+            "type": "Mammal",
+            "native_to": "Savannahs and grasslands of Africa",
+            "size": "Height: 4 to 5 feet tall; Weight: 440 to 990 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Tough, tall savanna grass",
+            "fun_fact": "When a herd of zebras runs together, their flashing black-and-white stripes confuse lions and predators!"
+        },
+        {
+            "name": "Zebu",
+            "type": "Mammal",
+            "native_to": "Originally South Asia (India), now global farms",
+            "size": "Height: 3.5 to 5 feet tall; Weight: 300 to 1,000 pounds",
+            "diet": "Herbivore",
+            "favorite_food": "Grasses, hay, and agricultural grains",
+            "fun_fact": "Zebus are easily spotted by the large hump on their shoulders and loose skin keeping them cool in tropical heat!"
+        }
+    ]
+}

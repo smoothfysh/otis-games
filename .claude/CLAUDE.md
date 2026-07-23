@@ -1,6 +1,6 @@
 ---
 name: kids-games
-description: Configuration for Antoine's kids' educational games project
+description: Configuration for Anushka's kids' educational games project
 metadata:
   type: project
 ---
