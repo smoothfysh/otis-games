@@ -1,4 +1,4 @@
-/* kidsgames/scripts/shared.js — Otis Games Shared Utilities */
+/* kidsgames/scripts/shared.js — Otis Play Shared Utilities */
 
 // === Audio Engine (Web Audio API) ===
 const OtisAudio = (() => {
