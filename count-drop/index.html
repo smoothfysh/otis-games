@@ -43,10 +43,6 @@
       position: absolute; top: 8px; font-size: 0.75rem; font-weight: 600;
       color: var(--teal); opacity: 0.6; text-transform: uppercase; letter-spacing: 1px;
     }
-    .cd-meadow-count {
-      position: absolute; bottom: 8px; font-size: clamp(1rem, 3vw, 1.3rem);
-      font-weight: 700; color: var(--teal); opacity: 0.7;
-    }
     .cd-meadow-empty {
       font-size: clamp(1rem, 3vw, 1.2rem); color: var(--text); opacity: 0.35;
     }
@@ -108,6 +104,26 @@
     }
     .cd-diff-value { font-weight: 700; color: #E76F51; min-width: 28px; text-align: center; }
 
+    .cd-check-btn {
+      display: block; margin: 8px auto; padding: 14px 40px;
+      font-size: clamp(1.2rem, 4vw, 1.8rem); font-weight: 800;
+      background: var(--teal); color: white; border: none;
+      border-radius: 16px; cursor: pointer;
+      box-shadow: 0 4px 0 #3d8b6e, 0 6px 12px rgba(0,0,0,0.15);
+      transition: transform 0.1s, box-shadow 0.1s;
+      touch-action: manipulation;
+    }
+    .cd-check-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #3d8b6e, 0 4px 8px rgba(0,0,0,0.15); }
+    .cd-check-btn:disabled { opacity: 0.5; transform: translateY(2px); box-shadow: 0 2px 0 #3d8b6e; pointer-events: none; }
+
+    .cd-feedback {
+      text-align: center; font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 700; padding: 6px 16px; min-height: 2.2rem;
+      transition: opacity 0.3s;
+    }
+    .cd-feedback.success { color: #2d8a4e; }
+    .cd-feedback.error { color: #d1453b; }
+
     .cd-round {
       text-align: center; padding: 8px 8px 24px;
       font-size: 0.85rem; color: var(--text); opacity: 0.5;
@@ -151,8 +167,9 @@
         <span class="cd-meadow-label">Meadow</span>
         <span class="cd-meadow-empty" id="cdMeadowEmpty">Drop animals here!</span>
         <div class="cd-placed" id="cdPlaced"></div>
-        <span class="cd-meadow-count" id="cdMeadowCount">0 / 3</span>
       </div>
+      <div class="cd-feedback" id="cdFeedback"></div>
+      <button class="cd-check-btn" id="cdCheckBtn">Check!</button>
       <div class="cd-tray" id="cdTray">
         <span class="cd-tray-label">Animals</span>
       </div>
@@ -180,7 +197,7 @@
       const targetEl = document.getElementById('cdTarget');
       const meadowEl = document.getElementById('cdMeadow');
       const placedEl = document.getElementById('cdPlaced');
-      const meadowCountEl = document.getElementById('cdMeadowCount');
+
       const meadowEmptyEl = document.getElementById('cdMeadowEmpty');
       const trayEl = document.getElementById('cdTray');
       const roundEl = document.getElementById('cdRound');
@@ -198,6 +215,20 @@
         round = 0;
       }
 
+      let submitted = false;
+      const feedbackEl = document.getElementById('cdFeedback');
+      const checkBtn = document.getElementById('cdCheckBtn');
+
+      function clearFeedback() {
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'cd-feedback';
+      }
+
+      function showFeedback(msg, type) {
+        feedbackEl.textContent = msg;
+        feedbackEl.className = 'cd-feedback ' + type;
+      }
+
       function loadRound() {
         if (round >= rounds.length) {
           createCelebration(document.body, 'You counted them all!', '🌟', () => {
@@ -210,40 +241,18 @@
         currentTarget = rounds[round].target;
         currentAnimal = ANIMALS[round % ANIMALS.length];
         placedCount = 0;
+        submitted = false;
+        checkBtn.disabled = false;
+        clearFeedback();
 
         targetEl.textContent = `${currentAnimal} × ${currentTarget}`;
         roundEl.textContent = `Round ${round + 1} of ${rounds.length}`;
         subtitleEl.textContent = `Drag the ${ANIMAL_NAMES[currentAnimal]} into the meadow!`;
         updateMeadow();
-
-        // Build tray
-        trayEl.innerHTML = `<span class="cd-tray-label">${ANIMAL_NAMES[currentAnimal]}</span>`;
-        for (let i = 0; i < maxCount; i++) {
-          const el = document.createElement('div');
-          el.className = 'cd-animal';
-          el.textContent = currentAnimal;
-          el.dataset.index = i;
-          trayEl.appendChild(el);
-
-          el.addEventListener('pointerdown', (e) => {
-            e.preventDefault();
-            el.classList.add('dragging');
-            const rect = el.getBoundingClientRect();
-            dragState = {
-              el, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top,
-              startX: rect.left, startY: rect.top, inMeadow: false,
-            };
-            el.style.position = 'fixed';
-            el.style.left = `${rect.left}px`;
-            el.style.top = `${rect.top}px`;
-            el.style.width = `${rect.width}px`;
-            el.style.height = `${rect.height}px`;
-          });
-        }
       }
 
       function updateMeadow() {
-        meadowCountEl.textContent = `${placedCount} / ${currentTarget}`;
+        clearFeedback();
         placedEl.innerHTML = '';
         for (let i = 0; i < placedCount; i++) {
           const item = document.createElement('div');
@@ -265,16 +274,28 @@
 
       function updateTrayAvailability() {
         const available = maxCount - placedCount;
-        const animals = trayEl.querySelectorAll('.cd-animal');
-        let visible = 0;
-        animals.forEach((el, i) => {
-          if (i < available) {
-            el.classList.remove('hidden');
-            visible++;
-          } else {
-            el.classList.add('hidden');
-          }
-        });
+        trayEl.innerHTML = `<span class="cd-tray-label">${ANIMAL_NAMES[currentAnimal]}</span>`;
+        for (let i = 0; i < available; i++) {
+          const el = document.createElement('div');
+          el.className = 'cd-animal';
+          el.textContent = currentAnimal;
+          trayEl.appendChild(el);
+          el.addEventListener('pointerdown', (e) => {
+            if (submitted) return;
+            e.preventDefault();
+            el.classList.add('dragging');
+            const rect = el.getBoundingClientRect();
+            dragState = {
+              el, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top,
+              startX: rect.left, startY: rect.top, inMeadow: false,
+            };
+            el.style.position = 'fixed';
+            el.style.left = `${rect.left}px`;
+            el.style.top = `${rect.top}px`;
+            el.style.width = `${rect.width}px`;
+            el.style.height = `${rect.height}px`;
+          });
+        }
       }
 
       function onPointerMove(e) {
@@ -292,21 +313,13 @@
         if (!dragState) return;
         dragState.el.classList.remove('dragging');
 
-        if (dragState.inMeadow && placedCount < currentTarget) {
+        if (dragState.inMeadow && placedCount < maxCount) {
           // Drop in meadow
           dragState.el.remove();
           placedCount++;
           updateMeadow();
           OtisAudio.playChime();
           OtisParticles.burst(e.clientX, e.clientY, '#7BC8A4', 12);
-
-          if (placedCount >= currentTarget) {
-            OtisAudio.playFanfare();
-            setTimeout(() => {
-              round++;
-              loadRound();
-            }, 900);
-          }
         } else {
           // Return to tray — reset position
           dragState.el.style.position = '';
@@ -322,6 +335,26 @@
 
       document.addEventListener('pointermove', onPointerMove);
       document.addEventListener('pointerup', onPointerUp);
+
+      checkBtn.addEventListener('click', () => {
+        if (submitted) return;
+        if (placedCount === currentTarget) {
+          submitted = true;
+          checkBtn.disabled = true;
+          showFeedback('Correct! 🎉', 'success');
+          OtisAudio.playFanfare();
+          setTimeout(() => {
+            round++;
+            loadRound();
+          }, 1200);
+        } else if (placedCount < currentTarget) {
+          showFeedback(`Too few! Add ${currentTarget - placedCount} more`, 'error');
+          OtisAudio.playPop();
+        } else {
+          showFeedback(`Too many! Tap ${placedCount - currentTarget} to send back`, 'error');
+          OtisAudio.playPop();
+        }
+      });
 
       generateRounds();
       loadRound();
