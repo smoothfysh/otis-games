@@ -22,7 +22,13 @@
     .mp-title { font-size: clamp(2.2rem, 7vw, 3.5rem) !important; font-weight: 800; color: var(--gold); margin-bottom: 2px; }
 
     .mp-info { text-align: center; }
-    .mp-level { font-size: 0.8rem; opacity: 0.45; margin-bottom: 2px; }
+    .mp-level {
+      font-size: clamp(2.4rem, 8vw, 4.2rem); font-weight: 800;
+      color: var(--gold); text-shadow: 0 2px 0 rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.92); padding: 8px 30px;
+      border-radius: 20px; box-shadow: 0 4px 14px var(--shadow);
+      margin-bottom: 14px; animation: fadeIn 0.3s ease;
+    }
     .mp-phase {
       font-size: clamp(1rem, 3vw, 1.3rem); font-weight: 600;
       color: var(--violet); margin-top: 0; animation: fadeIn 0.3s ease;
@@ -30,8 +36,8 @@
 
     /* Isometric path area */
     .mp-path {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      width: 100%; position: relative;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; width: 100%; position: relative;
     }
 
     .mp-gems-container {
@@ -111,7 +117,6 @@
     <div class="mp-title-group">
       <div class="mp-title">Memory Path</div>
       <div class="mp-info">
-        <div class="mp-level" id="mpLevel">Level 1</div>
         <div class="mp-phase" id="mpPhase">▶ Press Start when you're ready!</div>
       </div>
     </div>
@@ -142,7 +147,7 @@
       let gemElements = [];
 
       const pathEl = document.getElementById('mpPath');
-      const levelEl = document.getElementById('mpLevel');
+      let levelEl = document.getElementById('mpLevel');
       const phaseEl = document.getElementById('mpPhase');
       const replayBtn = document.getElementById('mpReplay');
       const startBtn = document.getElementById('mpStart');
@@ -170,7 +175,6 @@
         }
 
         const lvl = LEVELS[level];
-        levelEl.textContent = `Level ${level + 1}`;
         phaseEl.textContent = '👀 Watch the gems light up in order!';
         replayBtn.classList.remove('visible');
         pathEl.innerHTML = '';
@@ -178,6 +182,14 @@
         gemElements = [];
         playerSeq = [];
         canTap = false;
+
+        // Level badge (big, above the gems)
+        const levelBadge = document.createElement('div');
+        levelBadge.className = 'mp-level';
+        levelBadge.id = 'mpLevel';
+        levelBadge.textContent = `Level ${level + 1}`;
+        pathEl.appendChild(levelBadge);
+        levelEl = levelBadge;
 
         // Progress dots
         for (let i = 0; i < LEVELS.length; i++) {
