@@ -168,7 +168,7 @@ function shuffleArray(arr) {
   return a;
 }
 
-function createCelebration(container, message, emoji = '⭐', onPlayAgain) {
+function createCelebration(container, message, emoji = '⭐', onPlayAgain, onQuit) {
   const overlay = document.createElement('div');
   overlay.className = 'celebration';
   overlay.innerHTML = `
@@ -178,6 +178,7 @@ function createCelebration(container, message, emoji = '⭐', onPlayAgain) {
       <button class="btn" style="background:var(--coral);color:white;margin-top:16px;">
         Play Again
       </button>
+      ${onQuit ? '<button class="btn btn-ghost" style="margin-top:10px;">Quit</button>' : ''}
     </div>
   `;
   container.appendChild(overlay);
@@ -188,5 +189,11 @@ function createCelebration(container, message, emoji = '⭐', onPlayAgain) {
     overlay.remove();
     if (onPlayAgain) onPlayAgain();
   });
+  if (onQuit) {
+    overlay.querySelectorAll('button')[1].addEventListener('click', () => {
+      overlay.remove();
+      onQuit();
+    });
+  }
   return overlay;
 }

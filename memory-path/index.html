@@ -159,9 +159,12 @@
 
       function loadLevel() {
         if (level >= LEVELS.length) {
-          createCelebration(document.body, 'Amazing memory!', '🧠', () => {
-            level = 0; loadLevel();
-          });
+          createCelebration(document.body, 'Amazing memory!', '🧠',
+            () => {
+              level = 0; loadLevel();
+            },
+            () => { window.location.href = '../index.html'; }
+          );
           levelEl.textContent = 'All done! 🎉';
           return;
         }
