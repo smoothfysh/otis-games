@@ -206,10 +206,14 @@
 
         pathEl.appendChild(container);
 
-        // Generate sequence
+        // Generate sequence (no consecutive repeats, but same gem can appear again later)
         sequence = [];
         for (let i = 0; i < lvl.seqLength; i++) {
-          sequence.push(Math.floor(Math.random() * lvl.gemCount));
+          let next;
+          do {
+            next = Math.floor(Math.random() * lvl.gemCount);
+          } while (i > 0 && next === sequence[i - 1]);
+          sequence.push(next);
         }
 
         // Wait for the child to press start
@@ -241,12 +245,8 @@
           gemElements[sequence[i]].classList.add('lit');
           gemElements[sequence[i]].style.transform = 'scale(1.1)';
           const currentIdx = sequence[i];
-          let consecCount = 1;
-          for (let j = i - 1; j >= 0 && sequence[j] === currentIdx; j--) {
-            consecCount++;
-          }
           const arrow = gemElements[currentIdx].querySelector('.mp-gem-arrow');
-          if (arrow) arrow.textContent = consecCount > 1 ? `👆 ${consecCount}x` : '👆';
+          if (arrow) arrow.textContent = '👆';
           OtisAudio.playChime();
           i++;
         }, 700);
