@@ -134,7 +134,7 @@
         if (currentRound >= COLORS.length) {
           createCelebration(document.body, 'You know all the colors!', '🎨', () => {
             currentRound = 0; loadRound();
-          });
+          }, () => { window.location.href = '../index.html'; });
           progressEl.textContent = 'Amazing! 🌈';
           return;
         }

@@ -233,7 +233,7 @@
         if (round >= rounds.length) {
           createCelebration(document.body, 'You counted them all!', '🌟', () => {
             round = 0; generateRounds(); loadRound();
-          });
+          }, () => { window.location.href = '../index.html'; });
           roundEl.textContent = 'All done! 🎉';
           return;
         }

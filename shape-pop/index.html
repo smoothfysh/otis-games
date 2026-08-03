@@ -128,7 +128,7 @@
         if (round >= TOTAL_ROUNDS) {
           createCelebration(document.body, 'You popped them all!', '💥', () => {
             round = 0; loadRound();
-          });
+          }, () => { window.location.href = '../index.html'; });
           scoreEl.textContent = 'All done! 🎉';
           return;
         }
